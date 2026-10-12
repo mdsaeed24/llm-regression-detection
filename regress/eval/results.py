@@ -79,6 +79,9 @@ class RunRecord(BaseModel):
     aggregates: RunAggregates
     baseline_run_id: str | None = None
     status: Status | None = None
+    # Stored as decided at run time, so a later threshold change in config.yaml
+    # never rewrites history when an old report is regenerated.
+    status_reasons: list[str] = Field(default_factory=list)
 
 
 class EvalRun(BaseModel):

@@ -74,6 +74,31 @@ class ThresholdSettings(_Strict):
         return self
 
 
+class DriftSettings(_Strict):
+    """Moving-average accuracy floor for slow drift."""
+
+    window: PositiveInt = 7
+    accuracy_floor: float = Field(default=0.78, ge=0.0, le=1.0)
+
+
+class ReportingSettings(_Strict):
+    """HTML report output."""
+
+    output_dir: Path = Path("reports")
+    trend_runs: PositiveInt = 20
+    report_url_env: str = "REGRESS_REPORT_URL"
+
+
+class AlertSettings(_Strict):
+    """Slack alerting; falls back to the console when the webhook is unset."""
+
+    slack_webhook_env: str = "SLACK_WEBHOOK_URL"
+    timeout_s: PositiveFloat = 10.0
+
+    def webhook_url(self) -> str | None:
+        return os.environ.get(self.slack_webhook_env, "").strip() or None
+
+
 class StorageSettings(_Strict):
     """Where run history is kept."""
 
@@ -108,6 +133,9 @@ class Settings(_Strict):
     runtime: RuntimeSettings = RuntimeSettings()
     evaluation: EvaluationSettings = EvaluationSettings()
     thresholds: ThresholdSettings = ThresholdSettings()
+    drift: DriftSettings = DriftSettings()
+    reporting: ReportingSettings = ReportingSettings()
+    alerts: AlertSettings = AlertSettings()
     storage: StorageSettings = StorageSettings()
 
     def provider(self, name: str) -> ProviderSettings:

@@ -49,6 +49,26 @@ thresholds:
   category_critical_pp: 20.0
   category_min_cases: 8
 
+drift:
+  # Slow drift: each run can pass vs its baseline while quality erodes a little
+  # at a time (re-baselining hides it). Track the moving average of accuracy over
+  # the last `window` shipped runs (FAIL runs are blocked, so excluded) on the
+  # same dataset version, and WARN when it falls below `accuracy_floor`.
+  # Keep the floor a few points under the accepted baseline (v1: 83%).
+  window: 7
+  accuracy_floor: 0.78
+
+reporting:
+  output_dir: reports       # self-contained HTML reports (gitignored)
+  trend_runs: 20            # runs shown in the report's trend chart
+  # If this env var is set (CI sets it to the artifact URL), Slack links to it;
+  # otherwise the alert shows the local report path.
+  report_url_env: REGRESS_REPORT_URL
+
+alerts:
+  slack_webhook_env: SLACK_WEBHOOK_URL   # unset -> alert is printed to the console
+  timeout_s: 10
+
 storage:
   db_path: runs.sqlite      # SQLite run history (gitignored)
 

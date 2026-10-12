@@ -1,0 +1,200 @@
+{%- macro change_table(rows) %}
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Case</th><th>Email</th><th>Baseline output</th><th>This run</th><th>Why it changed</th></tr></thead>
+  <tbody>
+  {% for row in rows %}
+    <tr>
+      <td><code>{{ row.change.case_id }}</code><br><span class="muted">expected {{ row.change.expected_category }} · {{ row.change.expected_difficulty }}</span></td>
+      <td class="email">{{ row.email }}</td>
+      {% for side in (row.change.before, row.change.after) %}
+      <td class="out">
+        <div class="cat">{{ side.predicted_category or "—" }}</div>
+        <div>{{ side.summary or "" }}</div>
+        <div class="rel">relevance {{ side.relevance_score if side.relevance_score is not none else "n/a" }} · {{ "pass" if side.passed else "fail" }}</div>
+        {% if side.error %}<div class="err">{{ side.error }}</div>{% endif %}
+      </td>
+      {% endfor %}
+      <td class="why">{{ row.change.reason }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endmacro -%}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ status or "Baseline" }} · {{ record.prompt_version }} · {{ record.run_id }}</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --border: rgba(11,11,11,0.10);
+    --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7;
+    --series-1: #2a78d6; --series-2: #eb6834;
+    --good: #0ca30c; --good-text: #006300; --warning: #fab219; --critical: #d03b3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --border: rgba(255,255,255,0.10);
+      --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835;
+      --series-1: #3987e5; --series-2: #d95926;
+      --good-text: #0ca30c;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --border: rgba(255,255,255,0.10);
+    --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835;
+    --series-1: #3987e5; --series-2: #d95926;
+    --good-text: #0ca30c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink);
+         font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 22px; margin: 8px 0 4px; }
+  h2 { font-size: 16px; margin: 32px 0 8px; }
+  .muted { color: var(--muted); }
+  .meta { color: var(--ink-2); font-size: 13px; }
+  .meta code, td code { font-size: 12px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 600;
+           padding: 4px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); }
+  .badge .icon { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%;
+                 color: #fff; font-size: 12px; font-weight: 700; }
+  .PASS .icon { background: var(--good); }
+  .WARN .icon { background: var(--warning); color: #0b0b0b; }
+  .FAIL .icon { background: var(--critical); }
+  .BASELINE .icon { background: var(--series-1); }
+  ul.reasons { margin: 8px 0 0; padding-left: 20px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 16px; }
+  .tile .label { color: var(--ink-2); font-size: 13px; }
+  .tile .value { font-size: 26px; font-weight: 600; }
+  .tile .delta { font-size: 13px; color: var(--ink-2); }
+  .up { color: var(--good-text); } .down { color: var(--critical); }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--grid); }
+  th { color: var(--ink-2); font-weight: 600; font-size: 13px; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.sub td:first-child { padding-left: 24px; color: var(--ink-2); }
+  .email { max-width: 300px; white-space: pre-wrap; }
+  .out { min-width: 200px; }
+  .out .cat { font-weight: 600; }
+  .out .rel { color: var(--ink-2); font-size: 12px; }
+  .err { color: var(--critical); font-size: 12px; }
+  td.why { min-width: 150px; }
+  .legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 4px; }
+  .key { display: inline-block; width: 14px; height: 2px; vertical-align: middle; margin-right: 6px; border-radius: 1px; }
+  svg.chart { width: 100%; height: auto; display: block; }
+  svg .grid { stroke: var(--grid); stroke-width: 1; }
+  svg .ref { stroke: var(--axis); stroke-width: 1; }
+  svg .tick { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+  svg .tick.current { fill: var(--ink); font-weight: 600; }
+  svg .value { fill: var(--ink-2); font-size: 12px; font-weight: 600; }
+  svg .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  svg .dot { stroke: var(--surface); stroke-width: 2; }
+  svg .hit { fill: transparent; }
+  svg .hit:hover { fill: var(--grid); fill-opacity: 0.35; }
+  details summary { cursor: pointer; color: var(--ink-2); margin-top: 8px; }
+  footer { margin-top: 32px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  {% set badge = status or "BASELINE" %}
+  <span class="badge {{ badge }}"><span class="icon" aria-hidden="true">{{ {"PASS": "✓", "WARN": "!", "FAIL": "✕", "BASELINE": "●"}[badge] }}</span>{{ badge }}</span>
+  <h1>Prompt {{ record.prompt_version }}{% if comparison %} vs baseline{% else %} baseline run{% endif %}</h1>
+  <div class="meta">
+    Run <code>{{ record.run_id }}</code> · {{ record.created_at.strftime("%Y-%m-%d %H:%M UTC") }} ·
+    model {{ record.model }} · prompt hash <code>{{ record.prompt_hash }}</code> ·
+    dataset v{{ record.dataset_version }} · git <code>{{ record.git_sha or "n/a" }}</code>
+    {% if comparison %}<br>Baseline <code>{{ comparison.baseline_run_id }}</code> · {{ comparison.compared_cases }} shared cases{% endif %}
+  </div>
+  {% if reasons %}
+  <ul class="reasons">{% for r in reasons %}<li>{{ r }}</li>{% endfor %}</ul>
+  {% endif %}
+
+  {% if comparison %}
+  <div class="tiles">
+    {% for t in tiles %}
+    <div class="card tile">
+      <div class="label">{{ t.label }}</div>
+      <div class="value">{{ t.value }}</div>
+      <div class="delta">{% if t.delta %}<span class="{{ t.direction }}">{{ t.delta }}</span> vs baseline {{ t.before }}{% endif %}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <h2>Scorecard vs baseline</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Baseline</th><th class="num">This run</th><th class="num">Change</th></tr></thead>
+    <tbody>
+    {% for row in scorecard %}
+      <tr class="{{ 'sub' if row.sub }}"><td>{{ row.label }}</td><td class="num">{{ row.before }}</td><td class="num">{{ row.after }}</td>
+      <td class="num"><span class="{{ row.direction }}">{{ row.delta }}</span></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Regressed cases ({{ comparison.regressions | length }}) <span class="muted">— passed in the baseline, fail now</span></h2>
+  {% if comparison.regressions %}
+  {{ change_table(regressions) }}
+  {% else %}<p class="muted">None.</p>{% endif %}
+
+  {% if comparison.improvements %}
+  <details>
+    <summary>Improved cases ({{ comparison.improvements | length }}) — failed in the baseline, pass now</summary>
+    {{ change_table(improvements) }}
+  </details>
+  {% endif %}
+  {% else %}
+  <div class="tiles">
+    {% for t in tiles %}<div class="card tile"><div class="label">{{ t.label }}</div><div class="value">{{ t.value }}</div></div>{% endfor %}
+  </div>
+  {% endif %}
+
+  <h2>Trend over the last {{ history | length }} runs</h2>
+  <div class="card">
+    <div class="legend">
+      <span><span class="key" style="background: var(--series-1)"></span>Accuracy</span>
+      <span><span class="key" style="background: var(--series-2)"></span>Pass rate</span>
+      {% if drift %}<span class="muted">Drift: {{ drift.message }}</span>{% endif %}
+    </div>
+    {{ chart_svg | safe }}
+  </div>
+
+  <h2>Run history</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Run</th><th>Kind</th><th>Prompt</th><th>Data</th><th class="num">Accuracy</th><th class="num">Pass rate</th><th class="num">Relevance</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for r in history | reverse %}
+      <tr><td><code>{{ r.run_id }}</code></td><td>{{ r.kind }}</td><td>{{ r.prompt_version }}</td><td>v{{ r.dataset_version }}</td>
+      <td class="num">{{ "%.1f%%" | format(r.aggregates.accuracy * 100) }}</td>
+      <td class="num">{{ "%.1f%%" | format(r.aggregates.pass_rate * 100) }}</td>
+      <td class="num">{{ "%.2f" | format(r.aggregates.avg_relevance) if r.aggregates.avg_relevance is not none else "n/a" }}</td>
+      <td>{{ r.status or "—" }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+
+  <footer>
+    {{ agg.case_count }} cases · {{ agg.error_count }} errors · latency p50 {{ agg.latency_p50_ms | round | int }} ms, p95 {{ agg.latency_p95_ms | round | int }} ms ·
+    {{ agg.input_tokens }} input / {{ agg.output_tokens }} output tokens ·
+    cost ${{ "%.4f" | format(agg.cost_usd) }} feature + ${{ "%.4f" | format(agg.judge_cost_usd) }} judge (peak prices) ·
+    generated {{ generated_at }}
+  </footer>
+</main>
+</body>
+</html>

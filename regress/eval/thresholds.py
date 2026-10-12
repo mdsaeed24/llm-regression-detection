@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from regress.config import ThresholdSettings
 from regress.eval.compare import Comparison
+from regress.eval.drift import DriftResult
 from regress.eval.results import Status
 
 _SEVERITY: dict[Status, int] = {"PASS": 0, "WARN": 1, "FAIL": 2}
@@ -64,3 +65,11 @@ def evaluate_thresholds(comparison: Comparison, thresholds: ThresholdSettings) -
 
     status: Status = max((s for s, _ in findings), key=_SEVERITY.__getitem__, default="PASS")
     return Verdict(status=status, reasons=[reason for _, reason in findings])
+
+
+def apply_drift(verdict: Verdict, drift: DriftResult) -> Verdict:
+    """Slow drift is a WARN: a trend worth a human look, not proof this PR broke anything."""
+    if not drift.triggered:
+        return verdict
+    status: Status = verdict.status if verdict.status == "FAIL" else "WARN"
+    return Verdict(status=status, reasons=[*verdict.reasons, f"slow drift: {drift.message}"])

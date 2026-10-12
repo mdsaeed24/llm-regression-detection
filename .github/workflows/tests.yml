@@ -1,0 +1,31 @@
+# Unit tests. Every LLM call is mocked, so this needs no secrets and costs nothing.
+name: tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: pip install ".[dev]"
+
+      - name: Run tests
+        env:
+          DEEPEVAL_TELEMETRY_OPT_OUT: "1"
+        run: python -m pytest -q

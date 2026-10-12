@@ -14,7 +14,7 @@ CI/CD for LLM prompts. Every pull request that changes a prompt runs the LLM fea
 | ![Streamlit dashboard](docs/screenshot-dashboard.png) | ![HTML diff report](docs/screenshot-report.png) |
 | *Streamlit dashboard: history, trends, run-vs-run diff* | *HTML report: regressed cases, old vs new output side by side* |
 | ![Slack alert](docs/screenshot-slack.png) | ![Failing PR check](docs/screenshot-pr-check.png) |
-| *Slack alert (Block Kit)* | *PR blocked by the `eval` check ([PR #1](../../pull/1))* |
+| *Slack alert (Block Kit)* | *PR blocked by the `eval` check ([PR #1](https://github.com/mdsaeed24/llm-regression-detection/pull/1))* |
 
 ## How it works
 

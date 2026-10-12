@@ -76,7 +76,18 @@ class RunStore:
 
     def save(self, run: EvalRun) -> None:
         """Insert a run and all its results in one transaction."""
-        r, agg = run.record, run.record.aggregates
+        self._insert(run.record, run.results)
+
+    def save_record(self, record: RunRecord) -> None:
+        """Insert run metadata only (imported history: enough for drift and trends)."""
+        self._insert(record, [])
+
+    def exists(self, run_id: str) -> bool:
+        with self._connect() as conn:
+            return conn.execute("SELECT 1 FROM runs WHERE run_id = ?", (run_id,)).fetchone() is not None
+
+    def _insert(self, r: RunRecord, results: list[CaseResult]) -> None:
+        agg = r.aggregates
         with self._connect() as conn:
             conn.execute(
                 "INSERT INTO runs VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -95,7 +106,7 @@ class RunStore:
                         c.predicted_category, c.category_match, c.relevance_score, c.passed,
                         c.error, c.latency_ms, c.cost_usd + c.judge_cost_usd, c.model_dump_json(),
                     )  # fmt: skip
-                    for c in run.results
+                    for c in results
                 ],
             )
 

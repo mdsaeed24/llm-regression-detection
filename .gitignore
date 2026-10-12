@@ -26,3 +26,6 @@ data/raw/
 archive.zip
 archive/
 data/candidates.csv
+
+# Docker output volume (make docker-run)
+out/

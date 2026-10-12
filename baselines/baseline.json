@@ -1,0 +1,1957 @@
+{
+ "schema_version": 1,
+ "exported_at": "2026-10-12T09:27:55.912515Z",
+ "baseline": {
+  "record": {
+   "run_id": "20261012-090037-v1-761afd",
+   "created_at": "2026-10-12T09:00:37.047648Z",
+   "kind": "baseline",
+   "prompt_version": "v1",
+   "prompt_hash": "4e300967bacd",
+   "model": "deepseek-flash",
+   "dataset_version": 2,
+   "dataset_hash": "f6647610a97c385c",
+   "git_sha": null,
+   "aggregates": {
+    "case_count": 66,
+    "passed_count": 49,
+    "pass_rate": 0.7424242424242424,
+    "accuracy": 0.8333333333333334,
+    "per_category_accuracy": {
+     "billing": 1.0,
+     "technical": 0.75,
+     "account": 0.7,
+     "general": 0.88
+    },
+    "avg_relevance": 4.196969696969697,
+    "error_count": 0,
+    "latency_p50_ms": 1288.814542000182,
+    "latency_p95_ms": 1654.4295840431005,
+    "input_tokens": 45203,
+    "output_tokens": 1719,
+    "cost_usd": 0.005688852,
+    "judge_cost_usd": 0.027699496
+   },
+   "baseline_run_id": null,
+   "status": null,
+   "status_reasons": []
+  },
+  "results": [
+   {
+    "case_id": "gc_05c7c26447",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer complains about Virgin Trains schedule disruptions, which is unrelated to the product.",
+    "category_match": true,
+    "relevance_score": 3.0,
+    "relevance_reason": "The actual output correctly identifies the customer's complaint about Virgin Trains schedule disruptions, but it adds an unsupported claim that the issue is 'unrelated to the product,' which is not stated in the email. It also omits the customer's implied request for assistance, which is present in the expected output. Thus, it captures the core problem but misses the requested action and includes an extraneous fact.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1409.6009159693494,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 157,
+     "output": 24
+    },
+    "cost_usd": 0.000078972,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 116,
+     "output": 96
+    },
+    "judge_cost_usd": 0.0005501759999999999,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer complains about Virgin Trains schedule disruptions, which is unrelated to the product.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_0d7ab7f4ab",
+    "expected_category": "technical",
+    "expected_difficulty": "hard",
+    "predicted_category": "billing",
+    "summary": "Customer was charged after the app crashed during payment and wants the charge resolved.",
+    "category_match": false,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (app crashed during payment) and the consequence (customer was charged). It also correctly implies the customer's request to resolve the charge, which is a reasonable inference from the complaint. It does not include any personal data. The wording is slightly more formal than the original but is concise and clear.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1654.4295840431005,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 162,
+     "output": 24
+    },
+    "cost_usd": 0.00008047200000000001,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 108,
+     "output": 80
+    },
+    "judge_cost_usd": 0.00047625600000000004,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer was charged after the app crashed during payment and wants the charge resolved.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_132b1bc918",
+    "expected_category": "billing",
+    "expected_difficulty": "medium",
+    "predicted_category": "billing",
+    "summary": "Customer says they cancelled in March but was still charged this month and wants a refund.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (charged after cancellation) and the requested action (refund), matching the expected output in content and conciseness.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1728.5914999665692,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 169,
+     "output": 26
+    },
+    "cost_usd": 0.000084972,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 124,
+     "output": 45
+    },
+    "judge_cost_usd": 0.000358776,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer says they cancelled in March but was still charged this month and wants a refund.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_136caed794",
+    "expected_category": "general",
+    "expected_difficulty": "hard",
+    "predicted_category": "general",
+    "summary": "Customer reports unclear internet coverage issue outside their yard and requests unrelated personal contact.",
+    "category_match": true,
+    "relevance_score": 1.0,
+    "relevance_reason": "The actual output misstates the core problem. The customer's main issue is not about internet coverage but about asking whether the support agent is a guy or girl, and the request for a picture is secondary. The summary invents 'unclear internet coverage issue' as the main problem, which is not the primary focus of the email.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1412.9751670407131,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 180,
+     "output": 23
+    },
+    "cost_usd": 0.00008467199999999999,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 127,
+     "output": 81
+    },
+    "judge_cost_usd": 0.000505296,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer reports unclear internet coverage issue outside their yard and requests unrelated personal contact.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_1cf2e8187e",
+    "expected_category": "technical",
+    "expected_difficulty": "hard",
+    "predicted_category": "technical",
+    "summary": "Customer reports apps stop working without warning and their phone freezes every five minutes.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the core problem: apps stop working without warning and the phone freezes every five minutes. It omits the implicit request for assistance, which is present in the expected output, but the email itself does not explicitly state a request. The summary is concise and does not include personal data.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1451.1521669337526,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 158,
+     "output": 24
+    },
+    "cost_usd": 0.000079272,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 118,
+     "output": 75
+    },
+    "judge_cost_usd": 0.000469656,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports apps stop working without warning and their phone freezes every five minutes.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_1d2a70ccee",
+    "expected_category": "account",
+    "expected_difficulty": "medium",
+    "predicted_category": "account",
+    "summary": "Customer cannot log in even after resetting the password and needs help regaining account access.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (account not logging in after password reset) and the request for help. It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1044.3090420449153,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 167,
+     "output": 26
+    },
+    "cost_usd": 0.000084372,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 1,
+     "output": 53
+    },
+    "judge_cost_usd": 0.000233728,
+    "raw_outputs": [
+     "{\"category\":\"account\",\"summary\":\"Customer cannot log in even after resetting the password and needs help regaining account access.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_1d801d2742",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer's message is unclear and unrelated to the product, requesting free chocolate as compensation.",
+    "category_match": true,
+    "relevance_score": 2.0,
+    "relevance_reason": "The summary correctly identifies the customer's request for free chocolate as compensation, but it mischaracterizes the core problem by stating the message is 'unclear and unrelated to the product' instead of recognizing the complaint about abusive tweets. This misses the main issue of the abuse complaint.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1239.55933295656,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 165,
+     "output": 25
+    },
+    "cost_usd": 0.00008257200000000001,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 122,
+     "output": 69
+    },
+    "judge_cost_usd": 0.000451176,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer's message is unclear and unrelated to the product, requesting free chocolate as compensation.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_25813e9507",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer's message is unclear and references a film and letter, requesting help to fix something unspecified.",
+    "category_match": true,
+    "relevance_score": 2.0,
+    "relevance_reason": "The actual output fails to identify the customer's core problem, which is a complaint about the Deadpool film's content being sick-minded and disturbing. It instead describes the message as unclear and does not mention the request for help to fix the issue. This misses the main issue and the requested action.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1190.7722089672461,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 170,
+     "output": 27
+    },
+    "cost_usd": 0.00008647200000000001,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 7,
+     "output": 73
+    },
+    "judge_cost_usd": 0.00032084799999999993,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer's message is unclear and references a film and letter, requesting help to fix something unspecified.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_2a90557c27",
+    "expected_category": "technical",
+    "expected_difficulty": "hard",
+    "predicted_category": "technical",
+    "summary": "Customer reports tapping a notification opens the wrong item under the keyboard instead of replying.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The actual output accurately captures the core problem: tapping a notification opens the wrong item under the keyboard instead of replying. It correctly identifies the issue and the action (replying) that fails. The expected output is less clear but the actual output is specific and concise, matching the email's content without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1270.3886249801144,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 160,
+     "output": 25
+    },
+    "cost_usd": 0.000081072,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 108,
+     "output": 80
+    },
+    "judge_cost_usd": 0.00047625600000000004,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports tapping a notification opens the wrong item under the keyboard instead of replying.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_2d0044a9b3",
+    "expected_category": "technical",
+    "expected_difficulty": "medium",
+    "predicted_category": "technical",
+    "summary": "Customer's router is not working and provides no range, and they want help fixing it.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (router not working and no range) and the request (help fixing it). It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 881.6552089992911,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 166,
+     "output": 26
+    },
+    "cost_usd": 0.000084072,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 126,
+     "output": 54
+    },
+    "judge_cost_usd": 0.000397056,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer's router is not working and provides no range, and they want help fixing it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_303e0a4482",
+    "expected_category": "technical",
+    "expected_difficulty": "easy",
+    "predicted_category": "technical",
+    "summary": "Customer's app is stuck on the splash screen despite restarting their phone and they want help fixing it.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (app stuck on splash screen) and the customer's request for help fixing it. It also includes the detail about restarting the phone, which is relevant. It is concise and matches the expected output in substance.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1152.36541593913,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 190,
+     "output": 29
+    },
+    "cost_usd": 0.000094872,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 161,
+     "output": 64
+    },
+    "judge_cost_usd": 0.000482856,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer's app is stuck on the splash screen despite restarting their phone and they want help fixing it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_31ac83e79a",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "technical",
+    "summary": "Customer reports poor network coverage causing messaging and buffering problems in their area.",
+    "category_match": false,
+    "relevance_score": 3.0,
+    "relevance_reason": "The summary captures the core problem of poor network coverage and the resulting messaging and buffering issues, but it omits the specific location (HG2 area) and the context that the customer's wifi is down, which are key details from the email. It also does not mention any request for assistance, though the email implies a need for resolution. The summary is accurate but lacks specificity compared to the expected output.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1713.9704169239849,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 173,
+     "output": 23
+    },
+    "cost_usd": 0.00008257200000000001,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 14,
+     "output": 96
+    },
+    "judge_cost_usd": 0.000421168,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports poor network coverage causing messaging and buffering problems in their area.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_37e33bd711",
+    "expected_category": "technical",
+    "expected_difficulty": "hard",
+    "predicted_category": "general",
+    "summary": "Non-customer reports a Spectrum line in their yard after repeated calls and hints at possibly signing up.",
+    "category_match": false,
+    "relevance_score": 2.0,
+    "relevance_reason": "The actual output correctly identifies the core problem (a Spectrum line in the yard) and the customer's repeated calls, but it misinterprets the customer's intent by saying they are 'hinting at possibly signing up' when the email only mentions having coaxial cable and being tempted, which is not a request to sign up. The expected output focuses on the customer's anger about service, which is not captured. The summary is partially accurate but includes an unsupported inference.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1600.6265829782933,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 181,
+     "output": 28
+    },
+    "cost_usd": 0.00009097200000000001,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 3,
+     "output": 109
+    },
+    "judge_cost_usd": 0.000458128,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Non-customer reports a Spectrum line in their yard after repeated calls and hints at possibly signing up.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_38c5a643a8",
+    "expected_category": "account",
+    "expected_difficulty": "easy",
+    "predicted_category": "account",
+    "summary": "Customer's account is locked for suspicious activity and they urgently need help regaining access.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (account locked due to suspicious activity) and the customer's urgent request for help regaining access. It is concise and specific, matching the expected output in content and tone.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1355.5766250938177,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 176,
+     "output": 25
+    },
+    "cost_usd": 0.000085872,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 5,
+     "output": 56
+    },
+    "judge_cost_usd": 0.000250888,
+    "raw_outputs": [
+     "{\"category\":\"account\",\"summary\":\"Customer's account is locked for suspicious activity and they urgently need help regaining access.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_3b20e28604",
+    "expected_category": "account",
+    "expected_difficulty": "hard",
+    "predicted_category": "billing",
+    "summary": "Customer was logged out on the payment page during booking and money was deducted without receiving a ticket.",
+    "category_match": false,
+    "relevance_score": 4.0,
+    "relevance_reason": "The actual output accurately captures the core problem: the customer was logged out during payment, resulting in money deducted without a ticket. It also implies the request for resolution, though not explicitly stated. The expected output is vague ('account and billing problem'), but the actual output is more specific and correct. No personal data is copied. Minor omission: the actual output does not explicitly state the customer's desired action (e.g., refund or ticket), but it is implied. Overall, it is accurate and concise.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1319.3163749529049,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 172,
+     "output": 28
+    },
+    "cost_usd": 0.00008827200000000001,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 120,
+     "output": 115
+    },
+    "judge_cost_usd": 0.0006306959999999999,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer was logged out on the payment page during booking and money was deducted without receiving a ticket.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_3eef2718a6",
+    "expected_category": "account",
+    "expected_difficulty": "hard",
+    "predicted_category": "account",
+    "summary": "Customer was logged out and their account deleted, and wants to claim 5000 miles points.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the customer's core problem (logged out and account deleted) and their request (claim 5000 miles points). It is specific and concise, matching the email's details without adding extraneous information.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1184.7353749908507,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 170,
+     "output": 27
+    },
+    "cost_usd": 0.00008647200000000001,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 118,
+     "output": 59
+    },
+    "judge_cost_usd": 0.000406296,
+    "raw_outputs": [
+     "{\"category\":\"account\",\"summary\":\"Customer was logged out and their account deleted, and wants to claim 5000 miles points.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_422386e510",
+    "expected_category": "account",
+    "expected_difficulty": "easy",
+    "predicted_category": "account",
+    "summary": "Customer cannot log in after forgetting their password and never received the reset email, requesting help to reset it.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (forgot password, cannot log in, did not receive reset email) and the requested action (help to reset it). It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1320.7261660136282,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 178,
+     "output": 29
+    },
+    "cost_usd": 0.00009127199999999999,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 15,
+     "output": 63
+    },
+    "judge_cost_usd": 0.000291808,
+    "raw_outputs": [
+     "{\"category\":\"account\",\"summary\":\"Customer cannot log in after forgetting their password and never received the reset email, requesting help to reset it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_46e8aa321c",
+    "expected_category": "technical",
+    "expected_difficulty": "easy",
+    "predicted_category": "technical",
+    "summary": "Customer's app freezes and is unresponsive despite clearing cache and restarting the phone.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the core problem (app freezing and unresponsive) and the customer's troubleshooting steps (cleared cache, restarted phone), but it omits the customer's request for guidance on what to do next, which is a key part of the email.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1192.2854169970378,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 181,
+     "output": 26
+    },
+    "cost_usd": 0.000088572,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 148,
+     "output": 68
+    },
+    "judge_cost_usd": 0.000481536,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer's app freezes and is unresponsive despite clearing cache and restarting the phone.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_48656fbc8d",
+    "expected_category": "general",
+    "expected_difficulty": "easy",
+    "predicted_category": "general",
+    "summary": "Customer asks about the return policy, refund eligibility, and return window for a product that does not fit.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the customer's core question about the return policy, including refund eligibility and the return window for a product that doesn't fit. It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1598.1799999717623,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 182,
+     "output": 29
+    },
+    "cost_usd": 0.000092472,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 20,
+     "output": 60
+    },
+    "judge_cost_usd": 0.00028652800000000003,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer asks about the return policy, refund eligibility, and return window for a product that does not fit.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_49e435d3c8",
+    "expected_category": "account",
+    "expected_difficulty": "hard",
+    "predicted_category": "billing",
+    "summary": "Customer wants a refund for a shared plan his wife never received and she also needs to set up an account.",
+    "category_match": false,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem: the customer wants a refund because his wife did not receive the subscription, and she also needs to set up an account. It is concise and specific, matching the email's content without adding extraneous details. The expected output is more general, but the actual output is more informative and still correct.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1288.814542000182,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 186,
+     "output": 31
+    },
+    "cost_usd": 0.000096072,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 137,
+     "output": 82
+    },
+    "judge_cost_usd": 0.0005224559999999999,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer wants a refund for a shared plan his wife never received and she also needs to set up an account.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_5744be7101",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer asks when PS4 items will be available at a location and complains about staff attitude.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the customer's core problem (asking about PS4 availability) and the secondary complaint (staff attitude). It omits the specific location 'Moss Side' and the detail that the staff member is Asian, but these are minor omissions. The summary is concise and does not include personal data.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1209.5845830626786,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 177,
+     "output": 26
+    },
+    "cost_usd": 0.000087372,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 18,
+     "output": 76
+    },
+    "judge_cost_usd": 0.000347248,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer asks when PS4 items will be available at a location and complains about staff attitude.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_582dc6694f",
+    "expected_category": "billing",
+    "expected_difficulty": "medium",
+    "predicted_category": "billing",
+    "summary": "Customer says they are charged 259 despite an Airtel 399 plan and poor service, and wants it fixed.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem: the customer is being charged 259 instead of the expected 399 plan and is dissatisfied with the service. It also correctly includes the request to fix the issue. The wording is slightly different from the expected output but conveys the same meaning without adding extraneous details or personal data.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1064.0977500006557,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 174,
+     "output": 33
+    },
+    "cost_usd": 0.000094872,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 16,
+     "output": 78
+    },
+    "judge_cost_usd": 0.000352528,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer says they are charged 259 despite an Airtel 399 plan and poor service, and wants it fixed.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_5b02273eb8",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer complains about spam and unpleasant smells and mentions a blocked driveway, with no clear product issue.",
+    "category_match": true,
+    "relevance_score": 3.0,
+    "relevance_reason": "The actual output captures the complaint about spam and unpleasant smells and mentions the blocked driveway, but it fails to include the specific items (toilets and sinks) and the request for assistance. It also adds an interpretation ('no clear product issue') not present in the email. The core problem is partially identified but the summary is incomplete and misses key specifics.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 834.2167499940842,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 166,
+     "output": 27
+    },
+    "cost_usd": 0.00008527199999999999,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 131,
+     "output": 85
+    },
+    "judge_cost_usd": 0.000526416,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer complains about spam and unpleasant smells and mentions a blocked driveway, with no clear product issue.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_5ccff5afb6",
+    "expected_category": "technical",
+    "expected_difficulty": "hard",
+    "predicted_category": "billing",
+    "summary": "Customer wants a refund for remaining contract months or compensation due to unsatisfactory service and network issues.",
+    "category_match": false,
+    "relevance_score": 3.0,
+    "relevance_reason": "The actual output correctly identifies the customer's dissatisfaction and the request for a refund or compensation, but it omits the alternative request to make the network work, which is a key part of the customer's demand. The expected output focuses on termination if service is not improved, but the email also explicitly asks for refund or compensation. The actual output is acceptable but misses the 'make the network work' option, making it incomplete.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1495.4062909819186,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 190,
+     "output": 27
+    },
+    "cost_usd": 0.000092472,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 13,
+     "output": 99
+    },
+    "judge_cost_usd": 0.000431728,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer wants a refund for remaining contract months or compensation due to unsatisfactory service and network issues.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_658c1cc571",
+    "expected_category": "technical",
+    "expected_difficulty": "hard",
+    "predicted_category": "technical",
+    "summary": "Customer's wifi is still offline after a technician installed the connection and said the subscription would activate.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The actual output accurately captures the core problem: the wifi is still offline after the technician's visit. It also includes the technician's statement about subscription activation, which is in the email. The expected output is less detailed, but the actual output is more specific and complete. No personal data is copied. Minor wording could be tightened, but overall it is excellent.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1292.859832989052,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 177,
+     "output": 27
+    },
+    "cost_usd": 0.000088572,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 125,
+     "output": 86
+    },
+    "judge_cost_usd": 0.000522456,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer's wifi is still offline after a technician installed the connection and said the subscription would activate.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_666331d542",
+    "expected_category": "billing",
+    "expected_difficulty": "medium",
+    "predicted_category": "billing",
+    "summary": "Customer complains their plan lasts 27 days while competitors offer 30 and threatens to switch providers.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the core problem (27-day plan vs. competitors' 30 days) and the threat to switch, but it omits the customer's request for help ('please help me'), which is a key part of the email. The expected output includes 'requesting assistance', so this is a minor omission.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1542.9193750023842,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 183,
+     "output": 28
+    },
+    "cost_usd": 0.000091572,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 155,
+     "output": 79
+    },
+    "judge_cost_usd": 0.0005343360000000001,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer complains their plan lasts 27 days while competitors offer 30 and threatens to switch providers.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_6ab2162452",
+    "expected_category": "billing",
+    "expected_difficulty": "medium",
+    "predicted_category": "billing",
+    "summary": "Customer requests a refund for a service that lasted only 40 minutes.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The actual output accurately captures the customer's core problem (a service that lasted only 40 minutes) and the requested action (a refund). It is concise and matches the expected output exactly, with no extraneous or incorrect information.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1367.844833061099,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 156,
+     "output": 23
+    },
+    "cost_usd": 0.00007747199999999999,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 105,
+     "output": 61
+    },
+    "judge_cost_usd": 0.00039705599999999996,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer requests a refund for a service that lasted only 40 minutes.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_7199cc1340",
+    "expected_category": "billing",
+    "expected_difficulty": "easy",
+    "predicted_category": "billing",
+    "summary": "Customer was charged $49.99 for a subscription but never received a confirmation email and wants the receipt sent.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (charged $49.99 but no confirmation email) and the requested action (send the receipt). It includes the specific amount, which is a minor detail but not incorrect. It is concise and matches the expected output in substance.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1246.2620419682935,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 184,
+     "output": 31
+    },
+    "cost_usd": 0.000095472,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 17,
+     "output": 67
+    },
+    "judge_cost_usd": 0.00031028800000000004,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer was charged $49.99 for a subscription but never received a confirmation email and wants the receipt sent.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_733162668b",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer reports a missing toilet paper roll on a train journey and asks for help resolving it.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the core problem (missing toilet paper on a train) and the request for help. It omits specific details like the train company, time, and route, which are present in the email and expected output, but these are minor omissions. The summary is concise and does not include personal data.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1408.7345419684425,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 180,
+     "output": 26
+    },
+    "cost_usd": 0.00008827200000000001,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 19,
+     "output": 77
+    },
+    "judge_cost_usd": 0.000352528,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer reports a missing toilet paper roll on a train journey and asks for help resolving it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_7751720e63",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer complains their Valentine card has not arrived despite tracking showing it is still arriving and wants help.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (Valentine card not arrived) and the tracking status (still arriving), and includes the request for help. It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1444.7534159990028,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 180,
+     "output": 27
+    },
+    "cost_usd": 0.00008947200000000001,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 21,
+     "output": 61
+    },
+    "judge_cost_usd": 0.000291808,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer complains their Valentine card has not arrived despite tracking showing it is still arriving and wants help.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_776695f6f3",
+    "expected_category": "general",
+    "expected_difficulty": "hard",
+    "predicted_category": "general",
+    "summary": "Customer's message is unclear and off-topic, with no identifiable issue or request.",
+    "category_match": true,
+    "relevance_score": 2.0,
+    "relevance_reason": "The actual output states the message is unclear and off-topic, but the expected output indicates the customer is commenting that the agent understands their slang. The actual output misses this point and does not identify any issue or request, which is a partial understanding at best.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1470.9348329342902,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 172,
+     "output": 25
+    },
+    "cost_usd": 0.00008467199999999999,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 120,
+     "output": 66
+    },
+    "judge_cost_usd": 0.000436656,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer's message is unclear and off-topic, with no identifiable issue or request.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_7f1fc057f5",
+    "expected_category": "billing",
+    "expected_difficulty": "hard",
+    "predicted_category": "billing",
+    "summary": "Customer was charged double for an add-on feature and wants a refund, though the add-on sometimes fails to work.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (double charge for an add-on) and the requested action (refund), and also mentions the secondary issue of the add-on not working. It is specific and concise, matching the email content without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 697.0086250221357,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 168,
+     "output": 32
+    },
+    "cost_usd": 0.000091872,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 120,
+     "output": 67
+    },
+    "judge_cost_usd": 0.000440616,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer was charged double for an add-on feature and wants a refund, though the add-on sometimes fails to work.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_8622faa935",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer reports a chicken sandwich tasting off and questions whether it has gone bad.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (chicken sandwich tasting off) and the customer's question about it being spoiled. It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1446.2266250047833,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 163,
+     "output": 23
+    },
+    "cost_usd": 0.000079572,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 124,
+     "output": 55
+    },
+    "judge_cost_usd": 0.00039837600000000004,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer reports a chicken sandwich tasting off and questions whether it has gone bad.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_87e85f3df6",
+    "expected_category": "account",
+    "expected_difficulty": "medium",
+    "predicted_category": "account",
+    "summary": "Customer changed their email and now cannot log in with either the new or old email, losing access to saved data.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the core problem: the customer changed their email and now cannot log in with either the new or old email, and it mentions the loss of access to saved data. It omits the explicit request for help, but the problem is clearly stated. The expected output includes 'wants access restored,' which is implied by 'losing access to saved data' but not explicitly stated as a request. This is a minor omission, so the summary is good but not perfect.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1375.4572079051286,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 181,
+     "output": 31
+    },
+    "cost_usd": 0.000094572,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 20,
+     "output": 112
+    },
+    "judge_cost_usd": 0.0004924479999999999,
+    "raw_outputs": [
+     "{\"category\":\"account\",\"summary\":\"Customer changed their email and now cannot log in with either the new or old email, losing access to saved data.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_9668aec9d5",
+    "expected_category": "technical",
+    "expected_difficulty": "medium",
+    "predicted_category": "technical",
+    "summary": "Customer reports SMS messages and replies are not being delivered and wants the messaging service fixed.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The actual output correctly identifies the core problem (SMS messages and replies not being delivered) and the requested action (fix the messaging service). It omits the specific detail of sending 250 messages to a girl, which is a minor omission but does not affect the main issue. The summary is concise and accurate.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1591.7389579117298,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 191,
+     "output": 25
+    },
+    "cost_usd": 0.000090372,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 166,
+     "output": 77
+    },
+    "judge_cost_usd": 0.000540936,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports SMS messages and replies are not being delivered and wants the messaging service fixed.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_9f2975ca7c",
+    "expected_category": "billing",
+    "expected_difficulty": "easy",
+    "predicted_category": "billing",
+    "summary": "Customer was charged $29.99 on 6/15 after canceling on 6/10 and requests a refund.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (charged after cancellation) and the requested action (refund), includes specific dates and amount, and is concise. It matches the expected output in substance and adds relevant specifics without extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1044.6353749139234,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 178,
+     "output": 34
+    },
+    "cost_usd": 0.00009727199999999999,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 14,
+     "output": 61
+    },
+    "judge_cost_usd": 0.00028256799999999997,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer was charged $29.99 on 6/15 after canceling on 6/10 and requests a refund.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_a3e59c7e27",
+    "expected_category": "technical",
+    "expected_difficulty": "hard",
+    "predicted_category": "technical",
+    "summary": "Customer reports their SMS service is not working and demands it be fixed immediately.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the customer's frustration with the SMS service and their demand for immediate fixing. It is concise and specific, matching the expected output in meaning. No personal data is included.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1160.8063749736175,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 185,
+     "output": 23
+    },
+    "cost_usd": 0.000086172,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 8,
+     "output": 52
+    },
+    "judge_cost_usd": 0.00023900799999999997,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports their SMS service is not working and demands it be fixed immediately.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_a48d105868",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer reports being mugged at the venue and asks whether the company can help.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (customer was mugged at the venue) and the request (asking if the company can help). It is concise and does not include extraneous details. The wording differs slightly from the expected output but conveys the same meaning.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 896.065125009045,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 162,
+     "output": 24
+    },
+    "cost_usd": 0.00008047200000000001,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 115,
+     "output": 67
+    },
+    "judge_cost_usd": 0.000434016,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer reports being mugged at the venue and asks whether the company can help.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_a5a7cae4df",
+    "expected_category": "account",
+    "expected_difficulty": "medium",
+    "predicted_category": "account",
+    "summary": "Customer is stuck on the 2FA verify screen because codes never arrive and cannot access their account.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The actual output accurately captures the core problem: the customer is stuck on the 2FA verify screen because codes never arrive and cannot access their account. It includes the key details from the email (codes not arriving, stuck on verify screen, cannot access account) and matches the expected output in meaning. It is concise and does not include any extraneous personal data. The only minor difference is that it omits the mention of 'since morning' and 'resend 10 baar kar liya' (repeated resends), but the expected output also omits the time frame and includes 'despite repeated resends', which the actual output implies with 'codes never arrive'. Overall, it is accurate and complete for a one-sentence summary.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1272.1126249525696,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 179,
+     "output": 28
+    },
+    "cost_usd": 0.000090372,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 12,
+     "output": 166
+    },
+    "judge_cost_usd": 0.0006957280000000001,
+    "raw_outputs": [
+     "{\"category\":\"account\",\"summary\":\"Customer is stuck on the 2FA verify screen because codes never arrive and cannot access their account.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_a6de1a3849",
+    "expected_category": "general",
+    "expected_difficulty": "hard",
+    "predicted_category": "general",
+    "summary": "Customer reports internet is still down and asks how to obtain the internet bolt mentioned.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The actual output accurately captures the customer's core problem (internet still down) and their request (how to obtain the internet bolt). It does not include any personal data or invent facts. The expected output is less specific, but the actual output aligns with the email content.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1351.2576250359416,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 164,
+     "output": 24
+    },
+    "cost_usd": 0.000081072,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 112,
+     "output": 69
+    },
+    "judge_cost_usd": 0.000437976,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer reports internet is still down and asks how to obtain the internet bolt mentioned.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_b15c3953f9",
+    "expected_category": "technical",
+    "expected_difficulty": "hard",
+    "predicted_category": "technical",
+    "summary": "Customer cannot post on the support forum due to a posting error with no highlighted fields to correct.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The actual output accurately captures the core problem: the customer cannot post on the support forum due to a posting error, and it correctly notes that no error is highlighted. It omits the specific context that the customer was trying to ask about an error message in their SM account, but the main issue and the implied request for help are clear. The expected output is less precise, focusing on the error message coming back every time, but the actual output is more aligned with the email's content.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1041.9439170509577,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 198,
+     "output": 27
+    },
+    "cost_usd": 0.000094872,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 22,
+     "output": 112
+    },
+    "judge_cost_usd": 0.000495088,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer cannot post on the support forum due to a posting error with no highlighted fields to correct.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_b4c35bb414",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer's message is unclear and does not describe a specific issue or request.",
+    "category_match": true,
+    "relevance_score": 1.0,
+    "relevance_reason": "The actual output states the message is unclear and does not describe a specific issue, but the email clearly implies that Snickers forgot something, which is the core problem. The expected output correctly identifies this implication and the request for assistance. The actual output misses the main issue entirely.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1156.0557920020074,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 154,
+     "output": 23
+    },
+    "cost_usd": 0.000076872,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 114,
+     "output": 69
+    },
+    "judge_cost_usd": 0.00044061600000000007,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer's message is unclear and does not describe a specific issue or request.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_b59771d1e9",
+    "expected_category": "technical",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer finds the app interface confusing and does not understand how to use it.",
+    "category_match": false,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the customer's core problem: the app interface is confusing and they don't understand how to use it. However, it omits the implicit request for assistance, which is present in the expected output. The summary is concise and does not include personal data.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1205.321833025664,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 167,
+     "output": 23
+    },
+    "cost_usd": 0.000080772,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 119,
+     "output": 69
+    },
+    "judge_cost_usd": 0.000447216,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer finds the app interface confusing and does not understand how to use it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_b6fa72627f",
+    "expected_category": "billing",
+    "expected_difficulty": "easy",
+    "predicted_category": "billing",
+    "summary": "Customer asks about differences between basic and premium pricing plans before considering an upgrade.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the customer's core question about the differences between basic and premium pricing plans and mentions the consideration of upgrading, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1273.8859590608627,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 170,
+     "output": 24
+    },
+    "cost_usd": 0.000082872,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 124,
+     "output": 50
+    },
+    "judge_cost_usd": 0.00037857600000000004,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer asks about differences between basic and premium pricing plans before considering an upgrade.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_b94078e1dd",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer asks unrelated personal question about their wife leaving and requests help from support.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The actual output correctly identifies that the customer is asking a personal question about their wife leaving and requesting help, but it omits that the question is directed at Apple Support, which is a key detail from the input. The summary is accurate but incomplete.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1376.4279170427471,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 164,
+     "output": 23
+    },
+    "cost_usd": 0.000079872,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 122,
+     "output": 64
+    },
+    "judge_cost_usd": 0.000431376,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer asks unrelated personal question about their wife leaving and requests help from support.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_b988fd2354",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer reports seeing a moving snake in the shop and asks for help resolving it.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (customer saw a snake in the shop) and the request (help to fix it). It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1498.1551669770852,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 172,
+     "output": 24
+    },
+    "cost_usd": 0.000083472,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 127,
+     "output": 56
+    },
+    "judge_cost_usd": 0.000406296,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer reports seeing a moving snake in the shop and asks for help resolving it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_c07800da9b",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer complains the magazine has too many lengthy scientific articles and wants more varied content.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The actual output correctly identifies the core problem (too many lengthy scientific articles) and implies a request for more varied content, which is a reasonable interpretation of the customer's complaint. However, it slightly overstates the request by saying 'wants more varied content' when the email only complains without explicitly asking for a specific action. The expected output mentions 'requesting assistance to resolve the issue,' which is also an inference. Overall, the summary is accurate and concise, with a minor addition not directly stated.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1139.1860840376467,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 163,
+     "output": 24
+    },
+    "cost_usd": 0.00008077199999999999,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 122,
+     "output": 115
+    },
+    "judge_cost_usd": 0.000633336,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer complains the magazine has too many lengthy scientific articles and wants more varied content.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_c11f97c2f2",
+    "expected_category": "technical",
+    "expected_difficulty": "easy",
+    "predicted_category": "technical",
+    "summary": "Customer reports the app crashes when uploading photos even after updating and asks for a fix.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (app crashes when uploading photos) and the customer's request (fix the bug), including the detail that updating did not resolve the issue. It is concise and matches the expected output in substance.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1442.9275000002235,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 177,
+     "output": 25
+    },
+    "cost_usd": 0.000086172,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 10,
+     "output": 60
+    },
+    "judge_cost_usd": 0.000273328,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports the app crashes when uploading photos even after updating and asks for a fix.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_c51609b072",
+    "expected_category": "account",
+    "expected_difficulty": "easy",
+    "predicted_category": "account",
+    "summary": "Customer cannot log in because their password is reportedly incorrect and wants help regaining account access.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (cannot log in due to incorrect password error) and the requested action (help regaining access). It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1558.2874580286443,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 172,
+     "output": 26
+    },
+    "cost_usd": 0.000085872,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 130,
+     "output": 58
+    },
+    "judge_cost_usd": 0.000418176,
+    "raw_outputs": [
+     "{\"category\":\"account\",\"summary\":\"Customer cannot log in because their password is reportedly incorrect and wants help regaining account access.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_c8bdbb6cd8",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer's message is unclear and contains no identifiable issue or request.",
+    "category_match": true,
+    "relevance_score": 1.0,
+    "relevance_reason": "The actual output fails to identify the customer's core problem. The email, despite informal slang, clearly indicates a printer issue ('Fax no printer') and dissatisfaction ('not passin vibe check'). The summary dismisses the message as unclear, missing the main issue and request for help.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1264.4675000337884,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 173,
+     "output": 21
+    },
+    "cost_usd": 0.00008017199999999999,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 129,
+     "output": 70
+    },
+    "judge_cost_usd": 0.00046437599999999996,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer's message is unclear and contains no identifiable issue or request.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_cb0d4acff7",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "technical",
+    "summary": "Customer reports their internet connection is down and demands to be directed to the owner.",
+    "category_match": false,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary correctly identifies the core problem (internet connection down) and the request (direct to owner), but it omits the detail that the customer is using wifi and data, which is part of the complaint. It also does not include the informal language but that is not required. The expected output includes the wifi/data detail, so the summary is slightly incomplete.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1733.565584057942,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 171,
+     "output": 24
+    },
+    "cost_usd": 0.000083172,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 8,
+     "output": 87
+    },
+    "judge_cost_usd": 0.000377608,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports their internet connection is down and demands to be directed to the owner.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_d3c43695b4",
+    "expected_category": "technical",
+    "expected_difficulty": "medium",
+    "predicted_category": "technical",
+    "summary": "Customer reports their hotspot is being used by others and their data is exhausted, and wants help fixing it.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The actual output accurately captures the core problem (hotspot used by others, data exhausted) and the request for help, matching the expected output in meaning and specificity. It is concise and complete.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1330.0859580049291,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 168,
+     "output": 29
+    },
+    "cost_usd": 0.000088272,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 135,
+     "output": 53
+    },
+    "judge_cost_usd": 0.000404976,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports their hotspot is being used by others and their data is exhausted, and wants help fixing it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_d8e0d0ed14",
+    "expected_category": "billing",
+    "expected_difficulty": "hard",
+    "predicted_category": "billing",
+    "summary": "Customer was double-charged for a plan renewal after a payment failure message and wants one debit refunded.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the core problem: the customer was double-charged after a payment failure message during renewal. It also correctly states the requested action: a refund for one debit. It is concise and specific, matching the expected output in substance, though it omits the detail that the app's message was false, which is a minor omission.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1254.2176670394838,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 183,
+     "output": 31
+    },
+    "cost_usd": 0.000095172,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 149,
+     "output": 84
+    },
+    "judge_cost_usd": 0.000546216,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer was double-charged for a plan renewal after a payment failure message and wants one debit refunded.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_dc757e73c6",
+    "expected_category": "technical",
+    "expected_difficulty": "medium",
+    "predicted_category": "technical",
+    "summary": "Customer reports Spotify is not working in their car and needs help fixing it.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The actual output correctly identifies the core problem (Spotify not working in the car) and the requested action (help fixing it). However, it omits the specific detail that the car belongs to the wife's in-laws, which is present in the input and expected output. This is a minor omission, so the summary is good but not perfect.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1187.8502080217004,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 172,
+     "output": 23
+    },
+    "cost_usd": 0.000082272,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 130,
+     "output": 84
+    },
+    "judge_cost_usd": 0.000521136,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports Spotify is not working in their car and needs help fixing it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_dd03c0fed8",
+    "expected_category": "technical",
+    "expected_difficulty": "easy",
+    "predicted_category": "technical",
+    "summary": "Customer's app crashes on opening even after reinstalling and they want help fixing it.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (app crashes on opening) and the customer's request (help fixing it), including the detail that reinstalling did not resolve the issue. It is concise and matches the expected output in content.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1007.4917500605807,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 177,
+     "output": 25
+    },
+    "cost_usd": 0.000086172,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 6,
+     "output": 60
+    },
+    "judge_cost_usd": 0.000268048,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer's app crashes on opening even after reinstalling and they want help fixing it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_e09c40aa20",
+    "expected_category": "general",
+    "expected_difficulty": "easy",
+    "predicted_category": "general",
+    "summary": "Customer asks how the new feature works and whether a tutorial is available.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the customer's core question about how the new feature works and their request for a tutorial, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1455.8636250440031,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 167,
+     "output": 22
+    },
+    "cost_usd": 0.000079572,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 120,
+     "output": 47
+    },
+    "judge_cost_usd": 0.000361416,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer asks how the new feature works and whether a tutorial is available.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_e0f3c37830",
+    "expected_category": "billing",
+    "expected_difficulty": "medium",
+    "predicted_category": "billing",
+    "summary": "Customer reports online price of 200 differs from offline 250 and asks that both prices be made equal.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (price discrepancy between online and offline) and the requested action (make prices equal). It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1394.7385830106214,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 179,
+     "output": 30
+    },
+    "cost_usd": 0.00009277199999999999,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 145,
+     "output": 55
+    },
+    "judge_cost_usd": 0.000426096,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer reports online price of 200 differs from offline 250 and asks that both prices be made equal.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_e30722789c",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "account",
+    "summary": "Customer reports being locked inside a bookstore for three hours and asks for help getting out.",
+    "category_match": false,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the core problem (locked inside a bookstore for three hours) and the request (help getting out). It omits the specific location 'Waterstone at Trafalgar Square', which is a minor detail but present in the email. The summary is concise and does not include personal data.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1514.3334170570597,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 178,
+     "output": 25
+    },
+    "cost_usd": 0.00008647200000000001,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 11,
+     "output": 75
+    },
+    "judge_cost_usd": 0.000334048,
+    "raw_outputs": [
+     "{\"category\":\"account\",\"summary\":\"Customer reports being locked inside a bookstore for three hours and asks for help getting out.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_e58e3a01ed",
+    "expected_category": "technical",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer's message is unclear, mentioning friends, Jio wifi, and the app not informing them.",
+    "category_match": false,
+    "relevance_score": 2.0,
+    "relevance_reason": "The actual output states the message is unclear and lists topics, but fails to identify the core problem: the customer is not receiving information about Jio's WiFi services through the app and wants clarification. It misses the requested action and does not provide a useful summary.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1095.3062090557069,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 164,
+     "output": 28
+    },
+    "cost_usd": 0.000085872,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 123,
+     "output": 66
+    },
+    "judge_cost_usd": 0.00044061600000000007,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer's message is unclear, mentioning friends, Jio wifi, and the app not informing them.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_e8550ba8e0",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer questions why fire sauce contains no real aag and asks for help resolving the perceived false advertising.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the customer's core problem (questioning why fire sauce lacks real 'aag' and perceiving false advertising) and the requested action (asking for help to fix it). It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1182.9929160885513,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 179,
+     "output": 28
+    },
+    "cost_usd": 0.000090372,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 145,
+     "output": 70
+    },
+    "judge_cost_usd": 0.000485496,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer questions why fire sauce contains no real aag and asks for help resolving the perceived false advertising.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_e91b016ede",
+    "expected_category": "technical",
+    "expected_difficulty": "medium",
+    "predicted_category": "technical",
+    "summary": "Customer is not receiving YouTube Premium access with their subscription and wants help fixing it.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (not receiving YouTube Premium access with subscription) and the requested action (help fixing it). It is concise and specific, matching the expected output without adding extraneous details.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1276.718333014287,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 171,
+     "output": 24
+    },
+    "cost_usd": 0.000083172,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 126,
+     "output": 56
+    },
+    "judge_cost_usd": 0.000404976,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer is not receiving YouTube Premium access with their subscription and wants help fixing it.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_ea12fcd879",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer complains about London Overground delays threatening their salary and asks about reimbursement.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (London Overground delays causing lateness and potential salary loss) and the request (reimbursement). It is concise and specific, matching the expected output without including personal data.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1390.322915976867,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 173,
+     "output": 23
+    },
+    "cost_usd": 0.00008257200000000001,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 12,
+     "output": 57
+    },
+    "judge_cost_usd": 0.00026408799999999994,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer complains about London Overground delays threatening their salary and asks about reimbursement.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_f37a41db1a",
+    "expected_category": "technical",
+    "expected_difficulty": "medium",
+    "predicted_category": "technical",
+    "summary": "Customer reports Spotify Premium constantly skipping songs on an Android tablet with a Bluetooth speaker despite troubleshooting.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The summary accurately captures the core problem (Spotify Premium skipping songs on an Android tablet with a Bluetooth speaker) and implies the request for help through the phrase 'Please help!' and 'despite troubleshooting'. It is concise and does not include extraneous personal data. It matches the expected output in substance, though it omits the explicit 'request assistance' phrasing, which is minor.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1310.7034170534462,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 166,
+     "output": 26
+    },
+    "cost_usd": 0.000084072,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 6,
+     "output": 92
+    },
+    "judge_cost_usd": 0.000394768,
+    "raw_outputs": [
+     "{\"category\":\"technical\",\"summary\":\"Customer reports Spotify Premium constantly skipping songs on an Android tablet with a Bluetooth speaker despite troubleshooting.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_f7495e3fcd",
+    "expected_category": "account",
+    "expected_difficulty": "hard",
+    "predicted_category": "general",
+    "summary": "Customer asks how to redeem points without a subscription, citing commitment concerns.",
+    "category_match": false,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately captures the core problem (redeeming points without a subscription) and the customer's stated reason (commitment issues). It is concise and does not include extraneous personal data. The wording differs slightly from the expected output but is equally effective.",
+    "passed": false,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1248.108541010879,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 158,
+     "output": 22
+    },
+    "cost_usd": 0.000076872,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 101,
+     "output": 66
+    },
+    "judge_cost_usd": 0.00041157600000000003,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer asks how to redeem points without a subscription, citing commitment concerns.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_fb3f39f375",
+    "expected_category": "general",
+    "expected_difficulty": "medium",
+    "predicted_category": "general",
+    "summary": "Customer reports calls routing to a Tesco Mobile voicemail and shares a joking reaction.",
+    "category_match": true,
+    "relevance_score": 4.0,
+    "relevance_reason": "The actual output correctly identifies the core issue (calls going to Tesco Mobile voicemail) and the customer's joking reaction, but it omits the implied request for assistance that is present in the expected output. It is accurate but slightly incomplete.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1019.7685420280322,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 167,
+     "output": 26
+    },
+    "cost_usd": 0.000084372,
+    "judge_usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 4,
+     "output": 65
+    },
+    "judge_cost_usd": 0.00028520799999999996,
+    "raw_outputs": [
+     "{\"category\":\"general\",\"summary\":\"Customer reports calls routing to a Tesco Mobile voicemail and shares a joking reaction.\"}"
+    ]
+   },
+   {
+    "case_id": "gc_fb6da3caf0",
+    "expected_category": "billing",
+    "expected_difficulty": "easy",
+    "predicted_category": "billing",
+    "summary": "Customer was charged twice for an order and wants the duplicate charge refunded.",
+    "category_match": true,
+    "relevance_score": 5.0,
+    "relevance_reason": "The summary accurately states the core problem (double charge) and the requested action (refund the duplicate charge). It omits the order number, but that is a minor detail and not required for a one-sentence summary. The summary is concise and does not include personal data.",
+    "passed": true,
+    "error": null,
+    "attempts": 1,
+    "latency_ms": 1232.9067919636145,
+    "usage": {
+     "input_cache_hit": 512,
+     "input_cache_miss": 175,
+     "output": 24
+    },
+    "cost_usd": 0.000084372,
+    "judge_usage": {
+     "input_cache_hit": 384,
+     "input_cache_miss": 117,
+     "output": 70
+    },
+    "judge_cost_usd": 0.000448536,
+    "raw_outputs": [
+     "{\"category\":\"billing\",\"summary\":\"Customer was charged twice for an order and wants the duplicate charge refunded.\"}"
+    ]
+   }
+  ]
+ },
+ "history": []
+}

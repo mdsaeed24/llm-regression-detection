@@ -29,8 +29,9 @@ from regress.prompts import load_prompt
 from regress.providers import FatalProviderError, get_provider
 from regress.reporting.console import format_comparison, format_history, format_run
 from regress.reporting.html import render_report, write_report
+from regress.reporting.markdown import format_markdown
 from regress.reporting.slack import build_payload, send_alert
-from regress.storage import RunStore
+from regress.storage import RunStore, export_baseline, import_baseline, load_baseline_file
 
 _HISTORY_SCAN = 500  # recent runs loaded for drift and the trend chart
 
@@ -101,7 +102,22 @@ def _cmd_baseline(args: argparse.Namespace) -> int:
     print(f"\nSaved as the new baseline: {run.record.run_id}")
     path = _write_report(run, store, settings, args.dataset)
     print(f"Report: {path}")
+    if args.export:
+        exported = export_baseline(run, args.export)
+        print(
+            f"Exported to {args.export} (+{len(exported.history)} earlier baselines kept for drift). "
+            "Commit it to make this the baseline CI compares against."
+        )
     return 0
+
+
+def _resolve_baseline(store: RunStore, spec: str) -> EvalRun | None:
+    """'latest' baseline in the DB, a run_id, or a committed baseline .json file."""
+    if spec == "latest":
+        return store.latest("baseline")
+    if spec.endswith(".json"):
+        return import_baseline(load_baseline_file(spec), store)
+    return store.load(spec)
 
 
 def _cmd_run(args: argparse.Namespace) -> int:
@@ -109,7 +125,7 @@ def _cmd_run(args: argparse.Namespace) -> int:
     settings = load_settings(args.config)
     store = RunStore(settings.storage.db_path)
     # Resolve the baseline before spending any tokens.
-    baseline = store.latest("baseline") if args.baseline == "latest" else store.load(args.baseline)
+    baseline = _resolve_baseline(store, args.baseline)
     if baseline is None:
         raise LookupError("No baseline yet. Create one with: python -m regress baseline --prompt ...")
 
@@ -128,8 +144,13 @@ def _cmd_run(args: argparse.Namespace) -> int:
     print(f"  drift: {drift.message}")
     path = _write_report(run, store, settings, args.dataset, comparison, verdict, drift)
     print(f"\nReport: {path}")
+    location = os.environ.get(settings.reporting.report_url_env) or str(path.resolve())
+    if args.summary_md:
+        Path(args.summary_md).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.summary_md).write_text(
+            format_markdown(run, comparison, verdict, drift, location), encoding="utf-8"
+        )
     if not args.no_alert:
-        location = os.environ.get(settings.reporting.report_url_env) or str(path.resolve())
         send_alert(
             build_payload(run, comparison, verdict, location),
             settings.alerts.webhook_url(),
@@ -228,12 +249,20 @@ def build_parser() -> argparse.ArgumentParser:
 
     baseline = sub.add_parser("baseline", help="evaluate a prompt and store it as the baseline")
     _add_eval_args(baseline)
+    baseline.add_argument(
+        "--export", metavar="PATH", help="also write the committed baseline file (baselines/baseline.json)"
+    )
     baseline.set_defaults(func=_cmd_baseline)
 
     run = sub.add_parser("run", help="evaluate a prompt and compare it against a baseline")
     _add_eval_args(run)
-    run.add_argument("--baseline", default="latest", help="'latest' or a run_id (default: latest)")
+    run.add_argument(
+        "--baseline",
+        default="latest",
+        help="'latest' (newest baseline in the DB), a run_id, or a baseline .json file",
+    )
     run.add_argument("--no-alert", action="store_true", help="skip the Slack/console alert")
+    run.add_argument("--summary-md", metavar="PATH", help="write a Markdown summary (PR comment)")
     run.set_defaults(func=_cmd_run)
 
     report = sub.add_parser("report", help="re-render the HTML report for a stored run")

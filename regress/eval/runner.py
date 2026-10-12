@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 import subprocess
 import uuid
 from collections.abc import Callable
@@ -148,7 +149,12 @@ def _new_run_id(prompt_version: str) -> str:
 
 
 def current_git_sha() -> str | None:
-    """HEAD commit, suffixed '-dirty' if the tree has uncommitted changes; None outside git."""
+    """HEAD commit, suffixed '-dirty' if the tree has uncommitted changes; None outside git.
+
+    ``GIT_SHA`` in the environment wins - a Docker image has no .git directory.
+    """
+    if os.environ.get("GIT_SHA"):
+        return os.environ["GIT_SHA"][:12]
     try:
         sha = subprocess.run(
             ["git", "rev-parse", "--short=12", "HEAD"], capture_output=True, text=True, check=True

@@ -1,0 +1,19 @@
+# Keep the build context small and secret-free.
+.env
+.venv/
+.git/
+.github/
+**/__pycache__/
+*.egg-info/
+build/
+archive/
+archive.zip
+data/raw/
+data/candidates.csv
+data/golden_draft.yaml
+reports/
+*.sqlite
+.deepeval/
+dashboard/
+scripts/
+.DS_Store

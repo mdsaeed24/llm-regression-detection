@@ -1,0 +1,39 @@
+# Build the runner image and smoke-test it (no secrets, no LLM calls).
+name: docker
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - pyproject.toml
+      - regress/**
+      - config.yaml
+      - .github/workflows/docker.yml
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: docker build -t regress:ci .
+
+      - name: Smoke test
+        run: |
+          # CLI starts, config + env overrides load, the store is writable as the
+          # non-root user, and the packaged prompt/dataset/baseline files are present.
+          docker run --rm regress:ci --help
+          docker run --rm -e REGRESS__THRESHOLDS__ACCURACY_CRITICAL_PP=5 regress:ci history
+          docker run --rm --entrypoint python regress:ci -c \
+            "from regress.prompts import load_prompt; from regress.dataset import load_dataset; \
+             from regress.storage import load_baseline_file; \
+             print(load_prompt('prompts/v1.yaml').version, load_dataset('data/golden.json').case_count, \
+                   load_baseline_file('baselines/baseline.json').baseline.record.run_id)"

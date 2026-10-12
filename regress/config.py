@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Mapping
 from pathlib import Path
 
 import yaml
@@ -153,8 +154,29 @@ class Settings(_Strict):
             raise KeyError(f"No pricing for model '{model}' in config.yaml") from None
 
 
+ENV_OVERRIDE_PREFIX = "REGRESS__"
+
+
 def load_settings(path: Path | str = DEFAULT_CONFIG_PATH) -> Settings:
-    """Load .env into the process environment, then parse and validate config.yaml."""
+    """Load .env into the process environment, then parse and validate config.yaml.
+
+    Any setting can be overridden with an env var named after its path, e.g.
+    ``REGRESS__THRESHOLDS__ACCURACY_CRITICAL_PP=5`` or
+    ``REGRESS__STORAGE__DB_PATH=/data/runs.sqlite`` (values parsed as YAML, so
+    numbers and booleans keep their types). Used by Docker and CI.
+    """
     load_dotenv()
     raw = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
+    _apply_env_overrides(raw, os.environ)
     return Settings.model_validate(raw)
+
+
+def _apply_env_overrides(raw: dict, environ: Mapping[str, str]) -> None:
+    for name, value in environ.items():
+        if not name.startswith(ENV_OVERRIDE_PREFIX):
+            continue
+        keys = [k.lower() for k in name.removeprefix(ENV_OVERRIDE_PREFIX).split("__")]
+        node = raw
+        for key in keys[:-1]:
+            node = node.setdefault(key, {})
+        node[keys[-1]] = yaml.safe_load(value)

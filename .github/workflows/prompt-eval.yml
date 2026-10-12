@@ -1,0 +1,143 @@
+# Prompt regression gate: on every PR, evaluate each changed prompt against the
+# golden dataset and the BASE branch's committed baseline, then report and block
+# the merge on a critical regression.
+#
+# It runs on EVERY PR (no `paths:` filter) and passes in seconds when no prompt
+# changed. With a paths filter, a required status check never reports on PRs
+# that skip it, and GitHub then blocks those PRs forever ("Expected - waiting").
+#
+# Exit codes from `python -m regress run`: 0 PASS/WARN, 1 FAIL (critical
+# regression), 2 the eval could not run (bad key, no baseline, ...). Both 1 and
+# 2 fail this job, but the step summary says which one happened.
+name: prompt-eval
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write # sticky PR comment
+
+concurrency:
+  group: prompt-eval-${{ github.event.pull_request.number }}
+  cancel-in-progress: true # a new push supersedes the running eval
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # Slack and the PR comment link here; the HTML report is an artifact of this run.
+      REGRESS_REPORT_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need the base commit for the diff and the baseline
+
+      - name: Find changed prompts
+        id: changed
+        run: |
+          # NUL-separated so a hostile file name cannot inject shell syntax.
+          git diff -z --name-only --diff-filter=AMR "$BASE_SHA" HEAD -- 'prompts/*.yaml' > "$RUNNER_TEMP/changed"
+          if [ -s "$RUNNER_TEMP/changed" ]; then
+            echo "any=true" >> "$GITHUB_OUTPUT"
+            tr '\0' '\n' < "$RUNNER_TEMP/changed"
+          else
+            echo "any=false" >> "$GITHUB_OUTPUT"
+            echo "No prompt changes - nothing to evaluate." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.changed.outputs.any == 'true'
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        if: steps.changed.outputs.any == 'true'
+        run: pip install .
+
+      - name: Check the API key is available
+        if: steps.changed.outputs.any == 'true'
+        run: |
+          if [ -z "$DEEPSEEK_API_KEY" ]; then
+            echo "::error::DEEPSEEK_API_KEY is not set. Add it under Settings > Secrets and variables > Actions. (PRs from forks never receive secrets.)"
+            exit 1
+          fi
+
+      - name: Load the baseline from the base branch
+        # Not the PR's own copy: a PR that also edits baselines/baseline.json
+        # must not be able to hide its own regression.
+        if: steps.changed.outputs.any == 'true'
+        run: |
+          if ! git show "$BASE_SHA:baselines/baseline.json" > "$RUNNER_TEMP/baseline.json"; then
+            echo "::error::No baselines/baseline.json on the base branch. Run 'make baseline' and commit it to main first."
+            exit 1
+          fi
+
+      - name: Evaluate changed prompts
+        id: eval
+        if: steps.changed.outputs.any == 'true'
+        run: |
+          set +e
+          worst=0
+          mkdir -p reports
+          : > reports/summary.md
+          while IFS= read -r -d '' prompt; do
+            echo "::group::Evaluate $prompt"
+            name=$(basename -- "$prompt" .yaml)
+            python -m regress run --prompt "$prompt" --baseline "$RUNNER_TEMP/baseline.json" \
+              --summary-md "reports/summary-$name.md"
+            code=$?
+            echo "::endgroup::"
+            if [ -f "reports/summary-$name.md" ]; then
+              cat "reports/summary-$name.md" >> reports/summary.md
+            else
+              # shellcheck disable=SC2016  # backticks are Markdown, not command substitution
+              printf '### ❌ `%s`: the evaluation could not run (exit %s). See the job log.\n\n' "$prompt" "$code" >> reports/summary.md
+            fi
+            if [ "$code" -gt "$worst" ]; then worst=$code; fi
+          done < "$RUNNER_TEMP/changed"
+          cat reports/summary.md >> "$GITHUB_STEP_SUMMARY"
+          echo "exit_code=$worst" >> "$GITHUB_OUTPUT"
+
+      - name: Upload HTML reports
+        if: always() && steps.changed.outputs.any == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: prompt-eval-reports
+          path: reports/*.html
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Comment on the PR
+        if: always() && steps.eval.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('reports/summary.md', 'utf8');
+            const marker = '<!-- regress:prompt-eval -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const mine = comments.find(c => c.user.type === 'Bot' && c.body.includes(marker));
+            const text = `${marker}\n${body}`;
+            if (mine) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: mine.id, body: text });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body: text });
+            }
+
+      - name: Gate
+        if: steps.changed.outputs.any == 'true'
+        run: |
+          case "${{ steps.eval.outputs.exit_code }}" in
+            0) echo "No critical regression." ;;
+            1) echo "::error::Critical prompt regression - see the PR comment and the report artifact."; exit 1 ;;
+            *) echo "::error::The evaluation could not run - see the job log."; exit 1 ;;
+          esac

@@ -15,6 +15,7 @@ dependencies = [
     "tenacity>=8.2",
     "deepeval>=4.2",  # GEval summary relevance (judge = our DeepSeek provider)
     "jinja2>=3.1",
+    "certifi",  # CA bundle for the Slack webhook (python.org macOS builds lack system CAs)
 ]
 
 [project.optional-dependencies]

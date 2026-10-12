@@ -4,9 +4,12 @@ from __future__ import annotations
 
 import json
 import logging
+import ssl
 import urllib.error
 import urllib.request
 from typing import Any
+
+import certifi
 
 from regress.eval.compare import Comparison
 from regress.eval.results import EvalRun
@@ -83,7 +86,7 @@ def send_alert(payload: dict[str, Any], webhook_url: str | None, timeout_s: floa
         method="POST",
     )
     try:
-        with urllib.request.urlopen(request, timeout=timeout_s) as response:  # noqa: S310 - URL from env
+        with urllib.request.urlopen(request, timeout=timeout_s, context=_ssl_context()) as response:  # noqa: S310
             ok = response.status == 200
     except (urllib.error.URLError, TimeoutError) as exc:
         logger.warning("Slack alert failed: %s", exc)
@@ -91,6 +94,15 @@ def send_alert(payload: dict[str, Any], webhook_url: str | None, timeout_s: floa
     if not ok:
         logger.warning("Slack alert failed with HTTP %s", response.status)
     return ok
+
+
+def _ssl_context() -> ssl.SSLContext:
+    """Verify TLS against certifi's CA bundle.
+
+    python.org's macOS builds ship without system CA certificates, so the default
+    context fails there with CERTIFICATE_VERIFY_FAILED; certifi works everywhere.
+    """
+    return ssl.create_default_context(cafile=certifi.where())
 
 
 def to_text(payload: dict[str, Any]) -> str:

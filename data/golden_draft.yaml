@@ -1,0 +1,536 @@
+# =============================================================================
+# GOLDEN DATASET - HAND-WRITTEN DRAFT
+# =============================================================================
+# This file is the human source of truth. Compile it with:
+#     python scripts/build_dataset.py
+# which validates every case, assigns IDs, checks for duplicates and leftover
+# personal data, and writes data/golden.json (what the eval engine reads).
+#
+# RULES
+#   - Write cases under `cases:` at the bottom. Do NOT add an `id` field.
+#   - Inputs are adapted from public complaint sources (data/candidates.csv) and
+#     ANONYMIZED: replace names, emails, phones, order/card/account numbers, and
+#     handles. Placeholders like [ORDER_ID], [PHONE], [EMAIL] are fine.
+#   - Labels are your judgement. When torn between two categories, pick one,
+#     mark difficulty "hard", and record your reasoning in `notes`.
+#   - Editing an input_email changes its ID (it's a new test input). Editing a
+#     label, summary, difficulty, or notes keeps the ID.
+#
+# FIELDS
+#   input_email          the customer message. Use `|` and paste as-is: typos,
+#                        line breaks, emoji, odd punctuation are all welcome.
+#   expected_category    billing | technical | account | general
+#   ideal_summary        ONE sentence, ideally <= 25 words, starting with
+#                        "Customer ...", core problem + what they want. No PII.
+#                        (Matches what the prompt asks for, so the relevance
+#                        score measures content, not style mismatch.)
+#   expected_difficulty  easy | medium | hard  (how hard for a careful human?)
+#   notes                optional: why this label, which edge case it covers.
+#
+# CATEGORY GUIDE (keep consistent with prompts/v1.yaml)
+#   billing    charges, refunds, invoices, pricing, plan changes, failed payments
+#   technical  product/app not working: bugs, errors, crashes, outages, slowness
+#   account    login, password, 2FA, locked/hacked account, profile, deletion
+#   general    questions, feedback, feature requests, delivery status, other
+#
+# EDGE-CASE CHECKLIST - aim for several of each across the 60-80 cases
+#   [ ] ambiguous two-category emails (e.g. "app crashed during payment")
+#   [ ] multiple issues in one email (label = the one needing action most)
+#   [ ] very short emails ("refund??", "still broken")
+#   [ ] heavy typos / no punctuation / txt-speak
+#   [ ] Hinglish / mixed language (summary still in English)
+#   [ ] sarcasm ("great, charged twice, love it") - label the real issue
+#   [ ] angry customers / ALL CAPS / profanity
+#   [ ] rambling or irrelevant content around a small real request
+#   [ ] polite but vague ("something is off with my account?")
+#   [ ] all four categories x all three difficulties represented
+#
+# YAML GOTCHAS
+#   - Indent with spaces, never tabs. Keep the email text indented under `|`.
+#   - A summary containing `: ` or starting with a quote/bracket needs quotes:
+#       ideal_summary: "Customer asks: is the refund processed?"
+#   - The build script reports errors as "case #N, line L".
+# =============================================================================
+
+# FORMAT EXAMPLES - ignored by the build script. Copy the shape, not the content.
+examples:
+  - input_email: |
+      hi, i got charged 2x for my plan this month?? one on the 3rd and again on
+      the 5th. pls refund one of them asap
+    expected_category: billing
+    ideal_summary: Customer was charged twice for their plan this month and wants one charge refunded.
+    expected_difficulty: easy
+    notes: Single clear billing issue; casual style and typos only.
+
+  - input_email: |
+      Your app logged me out and now says my password is wrong even though I
+      haven't changed it. Also the dark mode toggle stopped working last week
+      but that's minor. I need to get in today!!
+    expected_category: account
+    ideal_summary: Customer is locked out because their unchanged password is rejected and needs access today; dark mode toggle is also broken.
+    expected_difficulty: medium
+    notes: >
+      Multi-issue: account access (urgent) + minor technical bug. Labeled
+      account because that's what the customer needs resolved.
+
+# YOUR CASES - start here.
+cases:
+- input_email: |
+    Hello, I was charged $49.99 for my subscription on 5/10, but I never
+    received the confirmation email. Can you please check and send me the
+    receipt? Thanks!
+  expected_category: billing
+  ideal_summary: Customer was charged for their subscription but did not receive a confirmation email and requests a receipt.
+  expected_difficulty: easy
+  notes: Clear billing issue with a request for documentation.
+
+- input_email: |
+    Hi, my app keeps crashing every time I try to open it. I've tried
+    reinstalling, but the problem persists. Can you help me fix this?
+  expected_category: technical
+  ideal_summary: Customer's app crashes on launch despite reinstalling, and they seek assistance to resolve the issue.
+  expected_difficulty: easy
+  notes: Straightforward technical issue with a clear request for help.
+
+- input_email: |
+    I can't log into my account. It says my password is incorrect, but I
+    haven't changed it. Please help me regain access.
+  expected_category: account
+  ideal_summary: Customer cannot log into their account due to an incorrect password error and requests help  to regain access.
+  expected_difficulty: easy
+  notes: Clear account access issue with a direct request for assistance.
+
+- input_email: |
+    I have a question about your new feature. How does it work, and is there
+    a tutorial available? Thanks!
+  expected_category: general
+  ideal_summary: Customer inquires about the functionality of a new feature and asks if a tutorial is available.
+  expected_difficulty: easy
+  notes: Simple general inquiry about a product feature.
+
+- input_email: |
+    I was charged twice for my order #12345. The first charge went through, but
+    the second one was a mistake. Please refund the extra charge.
+  expected_category: billing
+  ideal_summary: Customer was charged twice for order #12345 and requests a refund for the extra charge.
+  expected_difficulty: easy
+  notes: Clear billing issue with a specific order number and refund request.
+
+- input_email: |
+    causing the reply to be disregarded and the tapped notification under the keyboard is opened.
+  expected_category: technical
+  ideal_summary: Customer's reply is no working when keyboard section opened 
+  expected_difficulty: hard
+  notes: Clear technical issue with a request for troubleshooting advice.
+
+- input_email: |
+    I forgot my password and can't log in. I tried the "forgot password"
+    option, but I never received the reset email. Can you help me reset it?
+  expected_category: account
+  ideal_summary: Customer forgot their password and cannot log in; they did not receive the reset email and request assistance to reset it.
+  expected_difficulty: easy
+  notes: Clear account access issue with a request for password reset assistance.
+
+- input_email: |
+    I have a question about your pricing plans. Can you explain the differences
+    between the basic and premium plans? I'm considering upgrading.
+  expected_category: billing
+  ideal_summary: Customer asks for clarification on the differences between basic and premium pricing plans as they consider upgrading.
+  expected_difficulty: easy
+  notes: Billing inquiry about pricing plans.
+
+- input_email: |
+    I was charged $29.99 for my subscription on 6/15, but I canceled it on 6/10.
+    Please refund the charge as soon as possible.
+  expected_category: billing
+  ideal_summary: Customer was charged for a subscription after canceling it and requests a refund for the charge.
+  expected_difficulty: easy
+  notes: Clear billing issue with a request for a refund due to cancellation.
+
+- input_email: |
+    The app keeps crashing when I try to upload photos. I've tried updating to
+    the latest version, but it still doesn't work. Can you fix this bug?
+  expected_category: technical
+  ideal_summary: Customer's app crashes when uploading photos despite updating to the latest version, and they request a fix for the bug.
+  expected_difficulty: easy
+  notes: Clear technical issue with a request for a bug fix.
+
+- input_email: |
+    I can't access my account. It says my account is locked due to suspicious
+    activity. I need to get back in as soon as possible. Please help!
+  expected_category: account
+  ideal_summary: Customer's account is locked due to suspicious activity, and they urgently request assistance to regain access.
+  expected_difficulty: easy
+  notes: Clear account access issue with an urgent request for help.
+
+- input_email: |
+    I have a question about your return policy. If I buy a product and it doesn't
+    fit, can I return it for a full refund? How long do I have to return it?
+  expected_category: general
+  ideal_summary: Customer inquires about the return policy, specifically regarding full refunds and the return timeframe for products that don't fit.
+  expected_difficulty: easy
+  notes: Simple general inquiry about return policy and refund conditions.
+
+- input_email: |
+    My app is not loading properly. It gets stuck on the splash screen and
+    doesn't go any further. I've tried restarting my phone, but it still
+    doesn't work. Can you help me fix this?
+  expected_category: technical
+  ideal_summary: Customer's app is stuck on the splash screen and does not load properly despite restarting their phone, and they request assistance to fix the issue.
+  expected_difficulty: easy
+  notes: Clear technical issue with a request for troubleshooting help.
+
+- input_email: |
+    My app is freezing and not responding when I try to use it. I've cleared the
+    cache and restarted my phone, but it still doesn't work. What should I do?
+  expected_category: technical
+  ideal_summary: Customer's app is freezing and unresponsive despite clearing the cache and restarting their phone, and they seek guidance on how to fix it.
+  expected_difficulty: easy
+  notes: Clear technical issue with a request for troubleshooting advice.
+
+- input_email: |
+    Please help! Spotify Premium skipping through songs constantly on android tablet &amp; bluetooth speaker. Tried everything!
+  expected_category: technical
+  ideal_summary: Customer's Spotify Premium is skipping songs on their Android tablet and Bluetooth speaker despite trying various troubleshooting steps, and they request assistance to resolve the issue.
+  expected_difficulty: medium
+  notes: Clear technical issue with a request for troubleshooting help.
+
+- input_email: |
+    My apps stop working without warning and my phone freezes every five minutes!
+  expected_category: technical
+  ideal_summary: Customer's apps stop working and their phone freezes every five minutes, and they seek assistance to resolve the issue.
+  expected_difficulty: hard
+  notes: Clear technical issue with a request for troubleshooting help.
+
+- input_email: |
+    I service last 40 min sprint can I get a refund.
+  expected_category: billing
+  ideal_summary: Customer requests a refund for a service that lasted only 40 minutes.
+  expected_difficulty: medium
+  notes: Clear billing issue with a request for a refund due to service duration.
+
+- input_email: |
+    Mera wifi ka router is not working and nahi range de rha hai. Please help me fix it.
+  expected_category: technical
+  ideal_summary: Customer's Wi-Fi router is not working and has no range, and they request assistance to fix it.
+  expected_difficulty: medium
+  notes: Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed language).
+
+- input_email: |
+    Tumhara Sms Service itna bekaar kyun hai? why dont you guys aake theek karsakte ho kya? I am so frustrated with this service. Please fix it now!
+  expected_category: technical
+  ideal_summary: Customer expresses frustration with the SMS service and requests immediate assistance to fix it.
+  expected_difficulty: hard
+  notes: Clear technical issue with a request for immediate assistance, written in Hinglish (mixed language) and expressing strong emotion.
+
+- input_email: |
+    Bhai my hotspot is used by everyone or mera data khatam hogaya hai. Please help me fix it.
+  expected_category: technical
+  ideal_summary: Customer's hotspot is being used by others, causing their data to run out, and they request assistance to fix the issue.
+  expected_difficulty: medium
+  notes: Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed language).
+
+- input_email: |
+    Airtel de rha 399 ka plan but you guys are charging 259 usmein service acchi nahi hai. Please fix it.
+  expected_category: billing
+  ideal_summary: Customer is being charged 259 for a plan that should be 399 and expresses dissatisfaction with the service, requesting a fix.
+  expected_difficulty: medium
+  notes: Clear billing issue with a request for correction, written in Hinglish (mixed language).
+
+- input_email: |
+    Mujhe meri susbscription ke saath youtube premium ka access nahi mil raha hai. Please help me fix it.
+  expected_category: technical
+  ideal_summary: Customer is not receiving YouTube Premium access with their subscription and requests assistance to fix the issue.
+  expected_difficulty: medium
+  notes: Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed language).
+
+- input_email: |
+    justin k password reset kerne k baad bhi account isn't logging in. please help me fix it.
+  expected_category: account
+  ideal_summary: Customer's account is not logging in even after resetting the password, and they request assistance to fix the issue.
+  expected_difficulty: medium
+  notes: Clear account access issue with a request for troubleshooting help, written in Hinglish (mixed language).
+
+- input_email: |
+    online bta rha hai 200 and offline is showing 250. you guys ko dekhna chahiye ki online aur offline price same ho. Please fix it.
+  expected_category: billing
+  ideal_summary: Customer notices a discrepancy between online and offline pricing (200 vs 250) and requests that the prices be made consistent.
+  expected_difficulty: medium
+  notes: Clear billing issue with a request for price consistency, written in Hinglish (mixed language).
+
+- input_email: |
+    dusre providers giving 30 days or aap 27 din ka plan give kar rahe ho. i will switch to other provider if you guys don't fix it. please help me.
+  expected_category: billing
+  ideal_summary: Customer is dissatisfied with a 27-day plan compared to other providers offering 30 days and threatens to switch providers if the issue is not fixed, requesting assistance.
+  expected_difficulty: medium
+  notes: Clear billing issue with a request for plan duration correction, written in Hinglish (mixed language) and expressing dissatisfaction.
+
+- input_email: |
+    friends were bola tha jio is provide kar hai wifi or app ne hame nahi bataya.
+  expected_category: technical
+  ideal_summary: Customer is not receiving information about Jio's WiFi services through the app and requests clarification.
+  expected_difficulty: medium
+  notes: Clear technical issue with a request for information, written in Hinglish (mixed language).
+
+- input_email: |
+    app ka interface itna confusing hai ki mujhe understand nahi aa raha hai ki how use karna hai.
+  expected_category: technical
+  ideal_summary: Customer finds the app interface confusing and requests assistance to understand how to use it.
+  expected_difficulty: medium
+  notes: Clear technical issue with a request for guidance, written in Hinglish (mixed language).
+
+- input_email: |
+    Mera wife ke sasural car mein spotify kaam nahi lagg marr rha hai. Please help me fix it.
+  expected_category: technical
+  ideal_summary: Customer's Spotify is not working in their wife's in-laws' car and requests assistance to fix the issue.
+  expected_difficulty: medium
+  notes: Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed  language).
+
+- input_email: |
+    Dear Tesco, mera Chicken sandwich taste kyun lag rha hai ki vo die gaya?
+  expected_category: general
+  ideal_summary: Customer complains about the taste of a chicken sandwich from Tesco, suggesting it may be spoiled, and requests clarification or resolution.
+  expected_difficulty: medium
+  notes: Clear general complaint about product quality, written in Hinglish (mixed language).
+
+- input_email: |
+    Hello Tesco mobile tumhara SMS service kaam par lagao. i sent this girl 250 message bahar date par jaane ke liye and none of her replies aaya hi nahi hai. Please help me fix it.
+  expected_category: technical
+  ideal_summary: Customer's SMS service from Tesco Mobile is not working, as they sent 250 messages to a girl and did not receive any replies, and they request assistance to fix the issue.
+  expected_difficulty: medium
+  notes: Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed language).
+
+- input_email: |
+    Deadpool filam bhoot sick-minded, pagal, aisa letter Nina was saying in letter. Please help me fix it.
+  expected_category: general
+  ideal_summary: Customer complains about the content of the Deadpool film, describing it as sick-minded and disturbing, and requests clarification or resolution.
+  expected_difficulty: medium
+  notes: Clear general complaint about film content, written in Hinglish (mixed language).
+
+- input_email: |
+    Hello waterstone main apne aap inside se loked ho gaya at trafalgar square bookstore 3 ghante hoagye hai. Please help me get out.
+  expected_category: general
+  ideal_summary: Customer is locked inside the Waterstone bookstore at Trafalgar Square for three hours and requests assistance to get out.
+  expected_difficulty: medium
+  notes: Clear general issue with a request for assistance, written in Hinglish (mixed language).
+
+- input_email: |
+    oye Royal mail mujhe complain karna hai mera valentine card abhi tak anhi aaya. still arriving bta rha hai. Please help me fix it.
+  expected_category: general
+  ideal_summary: Customer has not received their Valentine card from Royal Mail, which is still marked as "arriving," and they request assistance to resolve the issue.
+  expected_difficulty: medium
+  notes: Clear general complaint about mail delivery, written in Hinglish (mixed language).
+
+- input_email: |
+    Yo wen u gettin da ps4 tings in moss side? Ain't waitin no more. Plus da asian guy whu works dere got bare attitude.
+  expected_category: general
+  ideal_summary: Customer inquires about the availability of PS4 items in Moss Side and complains about the attitude of an Asian employee, requesting assistance to resolve the issue.
+  expected_difficulty: medium
+  notes: Clear general complaint about employee attitude, written in Hinglish (mixed language).
+
+- input_email: |
+    Maine abhi just large poo liye virgin trains mein and there was no paper roll 19:30 train ferom Finchh to Glasgow. Please help me fix it.
+  expected_category: general
+  ideal_summary: Customer complains about the lack of toilet paper on the 19:30 Virgin train from Finch to Glasgow and requests assistance to resolve the issue.
+  expected_difficulty: medium
+  notes: Clear general complaint about train facilities, written in Hinglish (mixed language).
+
+- input_email: |
+    WHy is it that "fire sauce" isn't made with any real aag? aisa lag rha hai false adverstising. Please help me fix it.
+  expected_category: general
+  ideal_summary: Customer complains that "fire sauce" does not contain real fire, suggesting false advertising, and requests assistance to resolve the issue.
+  expected_difficulty: medium
+  notes: Clear general complaint about product advertising, written in Hinglish (mixed language).
+
+- input_email: |
+    meri wife mujhe kyun chod rhai hai Apple support? Please help me fix it.
+  expected_category: general
+  ideal_summary: Customer asks why their wife is leaving them, directed at Apple Support, and requests assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    dur jao and take away your annoying spam and toilets and sinks with your disgusting smella. Blocked my driveway
+  expected_category: general
+  ideal_summary: Customer complains about annoying spam, toilets, and sinks with a disgusting smell blocking their driveway and requests assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    Actualllly maiiiine saamp dekha hai tumhare shope mein and it was moving. Please help me fix it.
+  expected_category: general
+  ideal_summary: Customer claims to have seen a snake in the shop and requests assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    This tweet abuse. Can i have some free chcocolate at tesco to make up my tauma.
+  expected_category: general
+  ideal_summary: Customer complains about abusive tweets and requests free chocolate from Tesco to make up for their trauma.
+  expected_difficulty: medium
+
+- input_email: |
+    Erm.... snickers i think you forgot something.
+  expected_category: general
+  ideal_summary: Customer implies that Snickers forgot something, likely referring to a product or service, and requests assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    When you call someone and it goes through to their Tesco Moile Vocemail......LOOOOOOOOOOOOOOOL.
+  expected_category: general
+  ideal_summary: Customer finds it amusing that calls go to Tesco Mobile voicemail and expresses their reaction, requesting assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    Sort ir out LonDon overgrnd. if am late once more this i lose 25% of my salary. Are you reimbursing me?
+  expected_category: general
+  ideal_summary: Customer complains about being late due to London Overground issues and asks if they will be reimbursed for the lost salary, requesting assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    whats up fam! so my head isn't bussin, fr fr Fax no printer, its not passin vibe check. thats trash.
+  expected_category: general
+  ideal_summary: Customer complains about a printer not working and failing a "vibe check," requesting assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    Virgin trains always fuckin up with schedue. stupid trains.
+  expected_category: general
+  ideal_summary: Customer complains about Virgin trains being late and failing to maintain a good schedule, requesting assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    there are too many lenghty articles on overly scientific subjects that take up most of the magazine.
+  expected_category: general
+  ideal_summary: Customer complains about the excessive length and scientific nature of articles in the magazine, requesting assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    Hi Ive been mugged at your venuie. are you able to help me?
+  expected_category: general
+  ideal_summary: Customer reports being mugged at the store and requests assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    Network coverage in HG2 area is Horrible, I am finding at hard to message my side chick whilst my wifi is down due to buffering.
+  expected_category: general
+  ideal_summary: Customer complains about poor network coverage in the HG2 area and the difficulty of communicating while their wifi is down due to buffering, requesting assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    Virgin bastards big man ting i swear direct me to your owner what happened to my internet connection fam mans having to use wifi and dat.
+  expected_category: general
+  ideal_summary: Customer complains about their internet connection being down and having to rely on wifi and data from their side chick, requesting assistance to resolve the issue.
+  expected_difficulty: medium
+
+- input_email: |
+    Jheeze so u man speak slan and dat r u a girl what ends u from. and naa ii didn't what router.
+  expected_category: general
+  ideal_summary: Customer tells that you urderstand our slang.
+  expected_difficulty: hard
+
+- input_email: |
+    Blud!!! my contract with virgin don't let me use internet outside ma yard u get me u a chick doe u hot send me a pic. if ur a guy f off.
+  expected_category: general
+  ideal_summary: Customer is aking if you are guy or girl.
+  expected_difficulty: hard
+
+- input_email: |
+    naa g ma internet aint back up still how can i acquire this internet bolt you speak of.
+  expected_category: general
+  ideal_summary: Customer is asking for how to fix the wifi router.
+  expected_difficulty: hard
+
+- input_email: |
+    your app is shit main payment kar rhi thi crash hogaya and i have been charged.
+  expected_category: technical
+  notes: also money got deducted
+  ideal_summary: the app crashed during payment and they were charged.
+  expected_difficulty: Hard
+
+- input_email: |
+    i was about to get ticket at peak time suddenly the app take me back to login page and i was on payment page. my money got deducted
+  expected_category: Account
+  notes: Also money got deducted
+  ideal_summary: Customer is having account and billing problem.
+  expected_difficulty: Hard
+
+- input_email: |
+    I have extra add on feature and i was charged double now i want my refund. sometimes the add on data doesnt work.
+  expected_category: Billing
+  notes: Needs to fix the feature
+  ideal_summary: the double charge for the add-on.
+  expected_difficulty: Hard
+
+- input_email: |
+    how do i redeem my points without the subscription. i Have commitment issue.
+  expected_category: Account
+  ideal_summary: customer wants to redeem points without subscription.
+  expected_difficulty: Hard
+
+- input_email: |
+    i have been logged out and my account got deleted by you guys as i have 5000 miles points i want to claim that.
+  expected_category: Account
+  notes: Also he needs claim the points on his account.
+  ideal_summary: customer wants to claim the earned points.
+  expected_difficulty: hard
+
+- input_email: |
+    me and my wife bought together plan i got the susbscription and wife din't get and i am getting some problem with my connection now i want to get refund and my wife wants to setup a coount.
+  expected_category: Account
+  notes: customer needs refund for this susbcription as the service is not good and account setup for his wife.
+  ideal_summary: Customer is asking for refund and account issue
+  expected_difficulty: hard
+
+- input_email: |
+    Spectrum It's just in my yard. I've called 4-5 times in 6 weeks. I'm not a customer but it's pretty tempting. I do have some coaxial
+  expected_category: Technical
+  ideal_summary: Customer is angry about the service in his area
+  expected_difficulty: hard
+
+- input_email: |
+    Technician aaya tha connection k liye and he just plugged the wires or bola k subscription start hojayega. and the wifi is still is not online.
+  expected_category: technical
+  notes: customer has been charged before the service yet to start.
+  ideal_summary: the technician has not fixed the connection.
+  expected_difficulty: Hard
+
+- input_email: |
+    trying to ask a ques on your support forum about an error message in sm account only to have this result: "correct the highlighted errors and try again. there was an error while attempting to post your message. Try again in a few minutes." No error is highlighted!
+  expected_category: technical
+  ideal_summary: Customer is asking for error message which comes back everytime.
+  expected_difficulty: Hard
+
+- input_email: |
+    Hi my contract ends next year February but i am not satisfied with the service and i want the refund for remaining months. or make the network work. or else make some compensation via gift or extented service or discount on my plan.
+  expected_category: Technical
+  notes: costumer also wants the compensation for poor service.
+  ideal_summary: Customer wants to terminate if the service is not made better.
+  expected_difficulty: Hard
+
+- input_email: |
+    changed my email last week and now login keeps saying "no account found with this email"?? tried the old one too, same thing. all my saved stuff is in there pls help
+  expected_category: account
+  ideal_summary: Customer cannot log in after changing their email because neither the old nor new address is recognised, and wants access restored.
+  expected_difficulty: medium
+  notes: Pure login problem; casual style.
+
+- input_email: |
+    2FA code nahi aa raha phone pe since morning. resend 10 baar kar liya. stuck on the verify screen, cant get into my account at all
+  expected_category: account
+  ideal_summary: Customer is not receiving their two-factor authentication code despite repeated resends and cannot get into their account.
+  expected_difficulty: medium
+  notes: Hinglish; could look technical (SMS not arriving) but the customer's need is account access.
+
+- input_email: |
+    Tried to renew my plan, app said "payment failed, try again" so I did. Now my bank shows TWO debits for the renewal. Fix your app and give me my money back
+  expected_category: billing
+  ideal_summary: Customer was debited twice after the app falsely showed a payment failure during renewal and wants the duplicate charge refunded.
+  expected_difficulty: hard
+  notes: >
+    Ambiguous billing vs technical (app
+    error caused it), labeled billing because the action needed is a refund.
+
+- input_email: |
+    wow, cancelled my subscription back in march and you STILL took money this month. amazing service, really. refund it.
+  expected_category: billing
+  ideal_summary: Customer was charged this month despite cancelling their subscription in March and wants a refund.
+  expected_difficulty: medium
+  notes: Sarcasm; the real issue is a charge after cancellation.

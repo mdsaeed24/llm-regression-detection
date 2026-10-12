@@ -1,0 +1,537 @@
+{
+  "dataset_version": 2,
+  "content_hash": "f6647610a97c385c",
+  "built_at": "2026-10-12T08:59:39Z",
+  "source": "data/golden_draft.yaml",
+  "case_count": 66,
+  "cases": [
+    {
+      "input_email": "Virgin trains always fuckin up with schedue. stupid trains.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about Virgin trains being late and failing to maintain a good schedule, requesting assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_05c7c26447"
+    },
+    {
+      "input_email": "your app is shit main payment kar rhi thi crash hogaya and i have been charged.",
+      "expected_category": "technical",
+      "ideal_summary": "the app crashed during payment and they were charged.",
+      "expected_difficulty": "hard",
+      "notes": "also money got deducted",
+      "id": "gc_0d7ab7f4ab"
+    },
+    {
+      "input_email": "wow, cancelled my subscription back in march and you STILL took money this month. amazing service, really. refund it.",
+      "expected_category": "billing",
+      "ideal_summary": "Customer was charged this month despite cancelling their subscription in March and wants a refund.",
+      "expected_difficulty": "medium",
+      "notes": "Sarcasm; the real issue is a charge after cancellation.",
+      "id": "gc_132b1bc918"
+    },
+    {
+      "input_email": "Blud!!! my contract with virgin don't let me use internet outside ma yard u get me u a chick doe u hot send me a pic. if ur a guy f off.",
+      "expected_category": "general",
+      "ideal_summary": "Customer is aking if you are guy or girl.",
+      "expected_difficulty": "hard",
+      "notes": "",
+      "id": "gc_136caed794"
+    },
+    {
+      "input_email": "My apps stop working without warning and my phone freezes every five minutes!",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's apps stop working and their phone freezes every five minutes, and they seek assistance to resolve the issue.",
+      "expected_difficulty": "hard",
+      "notes": "Clear technical issue with a request for troubleshooting help.",
+      "id": "gc_1cf2e8187e"
+    },
+    {
+      "input_email": "justin k password reset kerne k baad bhi account isn't logging in. please help me fix it.",
+      "expected_category": "account",
+      "ideal_summary": "Customer's account is not logging in even after resetting the password, and they request assistance to fix the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear account access issue with a request for troubleshooting help, written in Hinglish (mixed language).",
+      "id": "gc_1d2a70ccee"
+    },
+    {
+      "input_email": "This tweet abuse. Can i have some free chcocolate at tesco to make up my tauma.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about abusive tweets and requests free chocolate from Tesco to make up for their trauma.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_1d801d2742"
+    },
+    {
+      "input_email": "Deadpool filam bhoot sick-minded, pagal, aisa letter Nina was saying in letter. Please help me fix it.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about the content of the Deadpool film, describing it as sick-minded and disturbing, and requests clarification or resolution.",
+      "expected_difficulty": "medium",
+      "notes": "Clear general complaint about film content, written in Hinglish (mixed language).",
+      "id": "gc_25813e9507"
+    },
+    {
+      "input_email": "causing the reply to be disregarded and the tapped notification under the keyboard is opened.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's reply is no working when keyboard section opened",
+      "expected_difficulty": "hard",
+      "notes": "Clear technical issue with a request for troubleshooting advice.",
+      "id": "gc_2a90557c27"
+    },
+    {
+      "input_email": "Mera wifi ka router is not working and nahi range de rha hai. Please help me fix it.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's Wi-Fi router is not working and has no range, and they request assistance to fix it.",
+      "expected_difficulty": "medium",
+      "notes": "Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed language).",
+      "id": "gc_2d0044a9b3"
+    },
+    {
+      "input_email": "My app is not loading properly. It gets stuck on the splash screen and\ndoesn't go any further. I've tried restarting my phone, but it still\ndoesn't work. Can you help me fix this?",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's app is stuck on the splash screen and does not load properly despite restarting their phone, and they request assistance to fix the issue.",
+      "expected_difficulty": "easy",
+      "notes": "Clear technical issue with a request for troubleshooting help.",
+      "id": "gc_303e0a4482"
+    },
+    {
+      "input_email": "Network coverage in HG2 area is Horrible, I am finding at hard to message my side chick whilst my wifi is down due to buffering.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about poor network coverage in the HG2 area and the difficulty of communicating while their wifi is down due to buffering, requesting assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_31ac83e79a"
+    },
+    {
+      "input_email": "Spectrum It's just in my yard. I've called 4-5 times in 6 weeks. I'm not a customer but it's pretty tempting. I do have some coaxial",
+      "expected_category": "technical",
+      "ideal_summary": "Customer is angry about the service in his area",
+      "expected_difficulty": "hard",
+      "notes": "",
+      "id": "gc_37e33bd711"
+    },
+    {
+      "input_email": "I can't access my account. It says my account is locked due to suspicious\nactivity. I need to get back in as soon as possible. Please help!",
+      "expected_category": "account",
+      "ideal_summary": "Customer's account is locked due to suspicious activity, and they urgently request assistance to regain access.",
+      "expected_difficulty": "easy",
+      "notes": "Clear account access issue with an urgent request for help.",
+      "id": "gc_38c5a643a8"
+    },
+    {
+      "input_email": "i was about to get ticket at peak time suddenly the app take me back to login page and i was on payment page. my money got deducted",
+      "expected_category": "account",
+      "ideal_summary": "Customer is having account and billing problem.",
+      "expected_difficulty": "hard",
+      "notes": "Also money got deducted",
+      "id": "gc_3b20e28604"
+    },
+    {
+      "input_email": "i have been logged out and my account got deleted by you guys as i have 5000 miles points i want to claim that.",
+      "expected_category": "account",
+      "ideal_summary": "customer wants to claim the earned points.",
+      "expected_difficulty": "hard",
+      "notes": "Also he needs claim the points on his account.",
+      "id": "gc_3eef2718a6"
+    },
+    {
+      "input_email": "I forgot my password and can't log in. I tried the \"forgot password\"\noption, but I never received the reset email. Can you help me reset it?",
+      "expected_category": "account",
+      "ideal_summary": "Customer forgot their password and cannot log in; they did not receive the reset email and request assistance to reset it.",
+      "expected_difficulty": "easy",
+      "notes": "Clear account access issue with a request for password reset assistance.",
+      "id": "gc_422386e510"
+    },
+    {
+      "input_email": "My app is freezing and not responding when I try to use it. I've cleared the\ncache and restarted my phone, but it still doesn't work. What should I do?",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's app is freezing and unresponsive despite clearing the cache and restarting their phone, and they seek guidance on how to fix it.",
+      "expected_difficulty": "easy",
+      "notes": "Clear technical issue with a request for troubleshooting advice.",
+      "id": "gc_46e8aa321c"
+    },
+    {
+      "input_email": "I have a question about your return policy. If I buy a product and it doesn't\nfit, can I return it for a full refund? How long do I have to return it?",
+      "expected_category": "general",
+      "ideal_summary": "Customer inquires about the return policy, specifically regarding full refunds and the return timeframe for products that don't fit.",
+      "expected_difficulty": "easy",
+      "notes": "Simple general inquiry about return policy and refund conditions.",
+      "id": "gc_48656fbc8d"
+    },
+    {
+      "input_email": "me and my wife bought together plan i got the susbscription and wife din't get and i am getting some problem with my connection now i want to get refund and my wife wants to setup a coount.",
+      "expected_category": "account",
+      "ideal_summary": "Customer is asking for refund and account issue",
+      "expected_difficulty": "hard",
+      "notes": "customer needs refund for this susbcription as the service is not good and account setup for his wife.",
+      "id": "gc_49e435d3c8"
+    },
+    {
+      "input_email": "Yo wen u gettin da ps4 tings in moss side? Ain't waitin no more. Plus da asian guy whu works dere got bare attitude.",
+      "expected_category": "general",
+      "ideal_summary": "Customer inquires about the availability of PS4 items in Moss Side and complains about the attitude of an Asian employee, requesting assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear general complaint about employee attitude, written in Hinglish (mixed language).",
+      "id": "gc_5744be7101"
+    },
+    {
+      "input_email": "Airtel de rha 399 ka plan but you guys are charging 259 usmein service acchi nahi hai. Please fix it.",
+      "expected_category": "billing",
+      "ideal_summary": "Customer is being charged 259 for a plan that should be 399 and expresses dissatisfaction with the service, requesting a fix.",
+      "expected_difficulty": "medium",
+      "notes": "Clear billing issue with a request for correction, written in Hinglish (mixed language).",
+      "id": "gc_582dc6694f"
+    },
+    {
+      "input_email": "dur jao and take away your annoying spam and toilets and sinks with your disgusting smella. Blocked my driveway",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about annoying spam, toilets, and sinks with a disgusting smell blocking their driveway and requests assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_5b02273eb8"
+    },
+    {
+      "input_email": "Hi my contract ends next year February but i am not satisfied with the service and i want the refund for remaining months. or make the network work. or else make some compensation via gift or extented service or discount on my plan.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer wants to terminate if the service is not made better.",
+      "expected_difficulty": "hard",
+      "notes": "costumer also wants the compensation for poor service.",
+      "id": "gc_5ccff5afb6"
+    },
+    {
+      "input_email": "Technician aaya tha connection k liye and he just plugged the wires or bola k subscription start hojayega. and the wifi is still is not online.",
+      "expected_category": "technical",
+      "ideal_summary": "the technician has not fixed the connection.",
+      "expected_difficulty": "hard",
+      "notes": "customer has been charged before the service yet to start.",
+      "id": "gc_658c1cc571"
+    },
+    {
+      "input_email": "dusre providers giving 30 days or aap 27 din ka plan give kar rahe ho. i will switch to other provider if you guys don't fix it. please help me.",
+      "expected_category": "billing",
+      "ideal_summary": "Customer is dissatisfied with a 27-day plan compared to other providers offering 30 days and threatens to switch providers if the issue is not fixed, requesting assistance.",
+      "expected_difficulty": "medium",
+      "notes": "Clear billing issue with a request for plan duration correction, written in Hinglish (mixed language) and expressing dissatisfaction.",
+      "id": "gc_666331d542"
+    },
+    {
+      "input_email": "I service last 40 min sprint can I get a refund.",
+      "expected_category": "billing",
+      "ideal_summary": "Customer requests a refund for a service that lasted only 40 minutes.",
+      "expected_difficulty": "medium",
+      "notes": "Clear billing issue with a request for a refund due to service duration.",
+      "id": "gc_6ab2162452"
+    },
+    {
+      "input_email": "Hello, I was charged $49.99 for my subscription on 5/10, but I never\nreceived the confirmation email. Can you please check and send me the\nreceipt? Thanks!",
+      "expected_category": "billing",
+      "ideal_summary": "Customer was charged for their subscription but did not receive a confirmation email and requests a receipt.",
+      "expected_difficulty": "easy",
+      "notes": "Clear billing issue with a request for documentation.",
+      "id": "gc_7199cc1340"
+    },
+    {
+      "input_email": "Maine abhi just large poo liye virgin trains mein and there was no paper roll 19:30 train ferom Finchh to Glasgow. Please help me fix it.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about the lack of toilet paper on the 19:30 Virgin train from Finch to Glasgow and requests assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear general complaint about train facilities, written in Hinglish (mixed language).",
+      "id": "gc_733162668b"
+    },
+    {
+      "input_email": "oye Royal mail mujhe complain karna hai mera valentine card abhi tak anhi aaya. still arriving bta rha hai. Please help me fix it.",
+      "expected_category": "general",
+      "ideal_summary": "Customer has not received their Valentine card from Royal Mail, which is still marked as \"arriving,\" and they request assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear general complaint about mail delivery, written in Hinglish (mixed language).",
+      "id": "gc_7751720e63"
+    },
+    {
+      "input_email": "Jheeze so u man speak slan and dat r u a girl what ends u from. and naa ii didn't what router.",
+      "expected_category": "general",
+      "ideal_summary": "Customer tells that you urderstand our slang.",
+      "expected_difficulty": "hard",
+      "notes": "",
+      "id": "gc_776695f6f3"
+    },
+    {
+      "input_email": "I have extra add on feature and i was charged double now i want my refund. sometimes the add on data doesnt work.",
+      "expected_category": "billing",
+      "ideal_summary": "the double charge for the add-on.",
+      "expected_difficulty": "hard",
+      "notes": "Needs to fix the feature",
+      "id": "gc_7f1fc057f5"
+    },
+    {
+      "input_email": "Dear Tesco, mera Chicken sandwich taste kyun lag rha hai ki vo die gaya?",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about the taste of a chicken sandwich from Tesco, suggesting it may be spoiled, and requests clarification or resolution.",
+      "expected_difficulty": "medium",
+      "notes": "Clear general complaint about product quality, written in Hinglish (mixed language).",
+      "id": "gc_8622faa935"
+    },
+    {
+      "input_email": "changed my email last week and now login keeps saying \"no account found with this email\"?? tried the old one too, same thing. all my saved stuff is in there pls help",
+      "expected_category": "account",
+      "ideal_summary": "Customer cannot log in after changing their email because neither the old nor new address is recognised, and wants access restored.",
+      "expected_difficulty": "medium",
+      "notes": "Pure login problem; casual style.",
+      "id": "gc_87e85f3df6"
+    },
+    {
+      "input_email": "Hello Tesco mobile tumhara SMS service kaam par lagao. i sent this girl 250 message bahar date par jaane ke liye and none of her replies aaya hi nahi hai. Please help me fix it.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's SMS service from Tesco Mobile is not working, as they sent 250 messages to a girl and did not receive any replies, and they request assistance to fix the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed language).",
+      "id": "gc_9668aec9d5"
+    },
+    {
+      "input_email": "I was charged $29.99 for my subscription on 6/15, but I canceled it on 6/10.\nPlease refund the charge as soon as possible.",
+      "expected_category": "billing",
+      "ideal_summary": "Customer was charged for a subscription after canceling it and requests a refund for the charge.",
+      "expected_difficulty": "easy",
+      "notes": "Clear billing issue with a request for a refund due to cancellation.",
+      "id": "gc_9f2975ca7c"
+    },
+    {
+      "input_email": "Tumhara Sms Service itna bekaar kyun hai? why dont you guys aake theek karsakte ho kya? I am so frustrated with this service. Please fix it now!",
+      "expected_category": "technical",
+      "ideal_summary": "Customer expresses frustration with the SMS service and requests immediate assistance to fix it.",
+      "expected_difficulty": "hard",
+      "notes": "Clear technical issue with a request for immediate assistance, written in Hinglish (mixed language) and expressing strong emotion.",
+      "id": "gc_a3e59c7e27"
+    },
+    {
+      "input_email": "Hi Ive been mugged at your venuie. are you able to help me?",
+      "expected_category": "general",
+      "ideal_summary": "Customer reports being mugged at the store and requests assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_a48d105868"
+    },
+    {
+      "input_email": "2FA code nahi aa raha phone pe since morning. resend 10 baar kar liya. stuck on the verify screen, cant get into my account at all",
+      "expected_category": "account",
+      "ideal_summary": "Customer is not receiving their two-factor authentication code despite repeated resends and cannot get into their account.",
+      "expected_difficulty": "medium",
+      "notes": "Hinglish; could look technical (SMS not arriving) but the customer's need is account access.",
+      "id": "gc_a5a7cae4df"
+    },
+    {
+      "input_email": "naa g ma internet aint back up still how can i acquire this internet bolt you speak of.",
+      "expected_category": "general",
+      "ideal_summary": "Customer is asking for how to fix the wifi router.",
+      "expected_difficulty": "hard",
+      "notes": "",
+      "id": "gc_a6de1a3849"
+    },
+    {
+      "input_email": "trying to ask a ques on your support forum about an error message in sm account only to have this result: \"correct the highlighted errors and try again. there was an error while attempting to post your message. Try again in a few minutes.\" No error is highlighted!",
+      "expected_category": "technical",
+      "ideal_summary": "Customer is asking for error message which comes back everytime.",
+      "expected_difficulty": "hard",
+      "notes": "",
+      "id": "gc_b15c3953f9"
+    },
+    {
+      "input_email": "Erm.... snickers i think you forgot something.",
+      "expected_category": "general",
+      "ideal_summary": "Customer implies that Snickers forgot something, likely referring to a product or service, and requests assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_b4c35bb414"
+    },
+    {
+      "input_email": "app ka interface itna confusing hai ki mujhe understand nahi aa raha hai ki how use karna hai.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer finds the app interface confusing and requests assistance to understand how to use it.",
+      "expected_difficulty": "medium",
+      "notes": "Clear technical issue with a request for guidance, written in Hinglish (mixed language).",
+      "id": "gc_b59771d1e9"
+    },
+    {
+      "input_email": "I have a question about your pricing plans. Can you explain the differences\nbetween the basic and premium plans? I'm considering upgrading.",
+      "expected_category": "billing",
+      "ideal_summary": "Customer asks for clarification on the differences between basic and premium pricing plans as they consider upgrading.",
+      "expected_difficulty": "easy",
+      "notes": "Billing inquiry about pricing plans.",
+      "id": "gc_b6fa72627f"
+    },
+    {
+      "input_email": "meri wife mujhe kyun chod rhai hai Apple support? Please help me fix it.",
+      "expected_category": "general",
+      "ideal_summary": "Customer asks why their wife is leaving them, directed at Apple Support, and requests assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_b94078e1dd"
+    },
+    {
+      "input_email": "Actualllly maiiiine saamp dekha hai tumhare shope mein and it was moving. Please help me fix it.",
+      "expected_category": "general",
+      "ideal_summary": "Customer claims to have seen a snake in the shop and requests assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_b988fd2354"
+    },
+    {
+      "input_email": "there are too many lenghty articles on overly scientific subjects that take up most of the magazine.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about the excessive length and scientific nature of articles in the magazine, requesting assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_c07800da9b"
+    },
+    {
+      "input_email": "The app keeps crashing when I try to upload photos. I've tried updating to\nthe latest version, but it still doesn't work. Can you fix this bug?",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's app crashes when uploading photos despite updating to the latest version, and they request a fix for the bug.",
+      "expected_difficulty": "easy",
+      "notes": "Clear technical issue with a request for a bug fix.",
+      "id": "gc_c11f97c2f2"
+    },
+    {
+      "input_email": "I can't log into my account. It says my password is incorrect, but I\nhaven't changed it. Please help me regain access.",
+      "expected_category": "account",
+      "ideal_summary": "Customer cannot log into their account due to an incorrect password error and requests help to regain access.",
+      "expected_difficulty": "easy",
+      "notes": "Clear account access issue with a direct request for assistance.",
+      "id": "gc_c51609b072"
+    },
+    {
+      "input_email": "whats up fam! so my head isn't bussin, fr fr Fax no printer, its not passin vibe check. thats trash.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about a printer not working and failing a \"vibe check,\" requesting assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_c8bdbb6cd8"
+    },
+    {
+      "input_email": "Virgin bastards big man ting i swear direct me to your owner what happened to my internet connection fam mans having to use wifi and dat.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about their internet connection being down and having to rely on wifi and data from their side chick, requesting assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_cb0d4acff7"
+    },
+    {
+      "input_email": "Bhai my hotspot is used by everyone or mera data khatam hogaya hai. Please help me fix it.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's hotspot is being used by others, causing their data to run out, and they request assistance to fix the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed language).",
+      "id": "gc_d3c43695b4"
+    },
+    {
+      "input_email": "Tried to renew my plan, app said \"payment failed, try again\" so I did. Now my bank shows TWO debits for the renewal. Fix your app and give me my money back",
+      "expected_category": "billing",
+      "ideal_summary": "Customer was debited twice after the app falsely showed a payment failure during renewal and wants the duplicate charge refunded.",
+      "expected_difficulty": "hard",
+      "notes": "Ambiguous billing vs technical (app error caused it), labeled billing because the action needed is a refund.",
+      "id": "gc_d8e0d0ed14"
+    },
+    {
+      "input_email": "Mera wife ke sasural car mein spotify kaam nahi lagg marr rha hai. Please help me fix it.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's Spotify is not working in their wife's in-laws' car and requests assistance to fix the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed  language).",
+      "id": "gc_dc757e73c6"
+    },
+    {
+      "input_email": "Hi, my app keeps crashing every time I try to open it. I've tried\nreinstalling, but the problem persists. Can you help me fix this?",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's app crashes on launch despite reinstalling, and they seek assistance to resolve the issue.",
+      "expected_difficulty": "easy",
+      "notes": "Straightforward technical issue with a clear request for help.",
+      "id": "gc_dd03c0fed8"
+    },
+    {
+      "input_email": "I have a question about your new feature. How does it work, and is there\na tutorial available? Thanks!",
+      "expected_category": "general",
+      "ideal_summary": "Customer inquires about the functionality of a new feature and asks if a tutorial is available.",
+      "expected_difficulty": "easy",
+      "notes": "Simple general inquiry about a product feature.",
+      "id": "gc_e09c40aa20"
+    },
+    {
+      "input_email": "online bta rha hai 200 and offline is showing 250. you guys ko dekhna chahiye ki online aur offline price same ho. Please fix it.",
+      "expected_category": "billing",
+      "ideal_summary": "Customer notices a discrepancy between online and offline pricing (200 vs 250) and requests that the prices be made consistent.",
+      "expected_difficulty": "medium",
+      "notes": "Clear billing issue with a request for price consistency, written in Hinglish (mixed language).",
+      "id": "gc_e0f3c37830"
+    },
+    {
+      "input_email": "Hello waterstone main apne aap inside se loked ho gaya at trafalgar square bookstore 3 ghante hoagye hai. Please help me get out.",
+      "expected_category": "general",
+      "ideal_summary": "Customer is locked inside the Waterstone bookstore at Trafalgar Square for three hours and requests assistance to get out.",
+      "expected_difficulty": "medium",
+      "notes": "Clear general issue with a request for assistance, written in Hinglish (mixed language).",
+      "id": "gc_e30722789c"
+    },
+    {
+      "input_email": "friends were bola tha jio is provide kar hai wifi or app ne hame nahi bataya.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer is not receiving information about Jio's WiFi services through the app and requests clarification.",
+      "expected_difficulty": "medium",
+      "notes": "Clear technical issue with a request for information, written in Hinglish (mixed language).",
+      "id": "gc_e58e3a01ed"
+    },
+    {
+      "input_email": "WHy is it that \"fire sauce\" isn't made with any real aag? aisa lag rha hai false adverstising. Please help me fix it.",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains that \"fire sauce\" does not contain real fire, suggesting false advertising, and requests assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear general complaint about product advertising, written in Hinglish (mixed language).",
+      "id": "gc_e8550ba8e0"
+    },
+    {
+      "input_email": "Mujhe meri susbscription ke saath youtube premium ka access nahi mil raha hai. Please help me fix it.",
+      "expected_category": "technical",
+      "ideal_summary": "Customer is not receiving YouTube Premium access with their subscription and requests assistance to fix the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear technical issue with a request for troubleshooting help, written in Hinglish (mixed language).",
+      "id": "gc_e91b016ede"
+    },
+    {
+      "input_email": "Sort ir out LonDon overgrnd. if am late once more this i lose 25% of my salary. Are you reimbursing me?",
+      "expected_category": "general",
+      "ideal_summary": "Customer complains about being late due to London Overground issues and asks if they will be reimbursed for the lost salary, requesting assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_ea12fcd879"
+    },
+    {
+      "input_email": "Please help! Spotify Premium skipping through songs constantly on android tablet &amp; bluetooth speaker. Tried everything!",
+      "expected_category": "technical",
+      "ideal_summary": "Customer's Spotify Premium is skipping songs on their Android tablet and Bluetooth speaker despite trying various troubleshooting steps, and they request assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "Clear technical issue with a request for troubleshooting help.",
+      "id": "gc_f37a41db1a"
+    },
+    {
+      "input_email": "how do i redeem my points without the subscription. i Have commitment issue.",
+      "expected_category": "account",
+      "ideal_summary": "customer wants to redeem points without subscription.",
+      "expected_difficulty": "hard",
+      "notes": "",
+      "id": "gc_f7495e3fcd"
+    },
+    {
+      "input_email": "When you call someone and it goes through to their Tesco Moile Vocemail......LOOOOOOOOOOOOOOOL.",
+      "expected_category": "general",
+      "ideal_summary": "Customer finds it amusing that calls go to Tesco Mobile voicemail and expresses their reaction, requesting assistance to resolve the issue.",
+      "expected_difficulty": "medium",
+      "notes": "",
+      "id": "gc_fb3f39f375"
+    },
+    {
+      "input_email": "I was charged twice for my order #12345. The first charge went through, but\nthe second one was a mistake. Please refund the extra charge.",
+      "expected_category": "billing",
+      "ideal_summary": "Customer was charged twice for order",
+      "expected_difficulty": "easy",
+      "notes": "Clear billing issue with a specific order number and refund request.",
+      "id": "gc_fb6da3caf0"
+    }
+  ]
+}

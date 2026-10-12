@@ -1,0 +1,74 @@
+# Central configuration. Secrets never live here; they come from .env.
+#
+# The model and temperature for the feature under test live in each prompt YAML
+# (prompts/*.yaml), so a model swap is a prompt change and gets regression-tested
+# like any other. This file owns everything that is NOT part of a prompt version.
+
+providers:
+  deepseek:
+    base_url: https://api.deepseek.com
+    api_key_env: DEEPSEEK_API_KEY
+    timeout_s: 60
+
+feature:
+  provider: deepseek
+  # DeepSeek thinking mode is ON by default. We disable it for the feature under
+  # test: it is a latency-sensitive classifier, and in thinking mode the API
+  # silently ignores `temperature`, which would make the prompt's temperature a lie.
+  # Sent as extra_body={"thinking": {"type": "disabled"}}.
+  thinking: false
+  max_tokens: 300
+
+judge:
+  provider: deepseek
+  # Deliberately a different model from the one under test, so the model is not
+  # grading its own output.
+  model: deepseek-v4-pro
+  thinking: false
+  temperature: 0.0
+  max_tokens: 400
+
+evaluation:
+  # A case PASSES when the output parsed, the category is correct, AND the judge
+  # scores the summary at least this high on the 1-5 relevance scale.
+  # "Accuracy" is category correctness alone; "pass rate" uses this full rule.
+  relevance_pass_min: 3
+
+thresholds:
+  # Drop in category accuracy vs the baseline, in PERCENTAGE POINTS
+  # (e.g. 92% -> 88% is a 4 pp drop). A drop greater than warn -> WARN,
+  # greater than critical -> FAIL (exit code 1, blocks the PR).
+  # Scale check: with 66 cases, one flipped case moves accuracy ~1.5 pp.
+  accuracy_warn_pp: 3.0
+  accuracy_critical_pp: 8.0
+  # One category collapsing can hide inside a small overall drop (each category
+  # is only ~15-40% of cases). FAIL if any category with at least
+  # category_min_cases cases drops more than category_critical_pp.
+  # With ~10 cases per category one flipped case is ~10 pp, so 20 pp = 3+ cases.
+  # Set category_critical_pp to null to disable.
+  category_critical_pp: 20.0
+  category_min_cases: 8
+
+storage:
+  db_path: runs.sqlite      # SQLite run history (gitignored)
+
+# USD per 1M tokens. DeepSeek has peak/off-peak pricing (off-peak = 50% of peak;
+# peak = 01:00-04:00 and 06:00-10:00 UTC, Mon-Fri). We always use PEAK prices so
+# cost estimates are conservative upper bounds.
+# Source: https://api-docs.deepseek.com/quick_start/pricing (checked 2026-10-10)
+pricing:
+  deepseek-flash:
+    input_cache_hit: 0.006
+    input_cache_miss: 0.30
+    output: 1.20
+  deepseek-v4-pro:
+    input_cache_hit: 0.044
+    input_cache_miss: 1.32
+    output: 3.96
+
+runtime:
+  concurrency: 5            # max in-flight LLM requests
+  max_retries: 4            # transient API errors (429, 5xx, timeouts, connection)
+  backoff_initial_s: 1.0    # exponential backoff: 1s, 2s, 4s, ... capped below
+  backoff_max_s: 30.0
+  validation_retries: 1     # re-asks after a response fails Pydantic validation

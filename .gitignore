@@ -1,0 +1,28 @@
+# Secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Generated artifacts
+reports/*.html
+*.sqlite
+*.sqlite3
+.deepeval/
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# Raw third-party data and anything derived directly from real tweets.
+# Only hand-rewritten, anonymized cases (data/golden_draft.yaml) are committed.
+data/raw/
+archive.zip
+archive/
+data/candidates.csv

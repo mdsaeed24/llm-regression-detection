@@ -1,0 +1,178 @@
+"""CLI entry point: ``python -m regress <command>``."""
+
+from __future__ import annotations
+
+import argparse
+import asyncio
+import logging
+import sys
+from pathlib import Path
+
+from regress.config import Settings, load_settings
+from regress.cost import estimate_cost
+from regress.dataset import load_dataset
+from regress.eval import EvalRun, compare_runs, evaluate_thresholds, run_eval
+from regress.eval.results import RunKind
+from regress.feature import EmailClassifier
+from regress.prompts import load_prompt
+from regress.providers import FatalProviderError, get_provider
+from regress.reporting.console import format_comparison, format_history, format_run
+from regress.storage import RunStore
+
+
+def _cmd_classify(args: argparse.Namespace) -> int:
+    """Classify a single email - a developer tool for poking at a prompt."""
+    settings = load_settings(args.config)
+    prompt = load_prompt(args.prompt)
+    email = Path(args.file).read_text(encoding="utf-8") if args.file else args.email
+    if not email:
+        print("Provide --email TEXT or --file PATH", file=sys.stderr)
+        return 2
+
+    classifier = EmailClassifier(
+        prompt,
+        get_provider(settings.feature.provider, settings),
+        settings.feature,
+        settings.runtime.validation_retries,
+    )
+    outcome = asyncio.run(classifier.classify(email))
+    cost = estimate_cost(outcome.usage, settings.pricing_for(prompt.model))
+
+    print(f"prompt   : {prompt.version} ({prompt.content_hash}) model={prompt.model}")
+    if outcome.classification:
+        print(f"category : {outcome.classification.category}")
+        print(f"summary  : {outcome.classification.summary}")
+    else:
+        print(f"FAILED   : {outcome.error}")
+    print(
+        f"attempts : {outcome.attempts}  latency: {outcome.latency_ms:.0f} ms  "
+        f"tokens: {outcome.usage.input_total} in / {outcome.usage.output} out  "
+        f"cost: ${cost:.6f}"
+    )
+    return 0 if outcome.ok else 1
+
+
+def _evaluate(args: argparse.Namespace, settings: Settings, kind: RunKind) -> EvalRun:
+    """Run the prompt over the dataset with a live progress counter."""
+    prompt = load_prompt(args.prompt)
+    dataset = load_dataset(args.dataset)
+    return asyncio.run(
+        run_eval(
+            prompt,
+            dataset,
+            settings,
+            feature_provider=get_provider(settings.feature.provider, settings),
+            judge_provider=get_provider(settings.judge.provider, settings),
+            kind=kind,
+            limit=args.limit,
+            progress=_progress,
+        )
+    )
+
+
+def _progress(done: int, total: int) -> None:
+    if sys.stderr.isatty():
+        end = "\n" if done == total else ""
+        print(f"\r  evaluating {done}/{total}", end=end, file=sys.stderr, flush=True)
+
+
+def _cmd_baseline(args: argparse.Namespace) -> int:
+    """Evaluate a prompt and store the run as the new baseline."""
+    settings = load_settings(args.config)
+    store = RunStore(settings.storage.db_path)
+    run = _evaluate(args, settings, "baseline")
+    store.save(run)
+    print(format_run(run))
+    print(f"\nSaved as the new baseline: {run.record.run_id}")
+    return 0
+
+
+def _cmd_run(args: argparse.Namespace) -> int:
+    """Evaluate a prompt, compare against a baseline, exit 1 on a critical regression."""
+    settings = load_settings(args.config)
+    store = RunStore(settings.storage.db_path)
+    # Resolve the baseline before spending any tokens.
+    baseline = store.latest("baseline") if args.baseline == "latest" else store.load(args.baseline)
+    if baseline is None:
+        raise LookupError("No baseline yet. Create one with: python -m regress baseline --prompt ...")
+
+    run = _evaluate(args, settings, "run")
+    comparison = compare_runs(baseline, run)
+    verdict = evaluate_thresholds(comparison, settings.thresholds)
+    record = run.record.model_copy(
+        update={"baseline_run_id": baseline.record.run_id, "status": verdict.status}
+    )
+    run = run.model_copy(update={"record": record})
+    store.save(run)
+    print(format_comparison(run, comparison, verdict))
+    return verdict.exit_code
+
+
+def _cmd_history(args: argparse.Namespace) -> int:
+    settings = load_settings(args.config)
+    print(format_history(RunStore(settings.storage.db_path).list_runs(args.limit)))
+    return 0
+
+
+def _add_eval_args(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--prompt", required=True, help="path to a prompt YAML")
+    parser.add_argument("--dataset", default="data/golden.json", help="compiled golden dataset")
+    parser.add_argument(
+        "--limit", type=_positive_int, help="evaluate only the first N cases (by case ID)"
+    )
+
+
+def _positive_int(value: str) -> int:
+    number = int(value)
+    if number < 1:
+        raise argparse.ArgumentTypeError("must be >= 1")
+    return number
+
+
+def build_parser() -> argparse.ArgumentParser:
+    """Construct the argument parser (exposed for tests)."""
+    parser = argparse.ArgumentParser(prog="regress", description=__doc__)
+    parser.add_argument("--config", default="config.yaml", help="path to config.yaml")
+    parser.add_argument("-v", "--verbose", action="store_true", help="debug logging")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    classify = sub.add_parser("classify", help="classify one email with a prompt")
+    classify.add_argument("--prompt", required=True, help="path to a prompt YAML")
+    group = classify.add_mutually_exclusive_group()
+    group.add_argument("--email", help="email text")
+    group.add_argument("--file", help="path to a file containing the email")
+    classify.set_defaults(func=_cmd_classify)
+
+    baseline = sub.add_parser("baseline", help="evaluate a prompt and store it as the baseline")
+    _add_eval_args(baseline)
+    baseline.set_defaults(func=_cmd_baseline)
+
+    run = sub.add_parser("run", help="evaluate a prompt and compare it against a baseline")
+    _add_eval_args(run)
+    run.add_argument("--baseline", default="latest", help="'latest' or a run_id (default: latest)")
+    run.set_defaults(func=_cmd_run)
+
+    history = sub.add_parser("history", help="list recent runs")
+    history.add_argument("--limit", type=_positive_int, default=20)
+    history.set_defaults(func=_cmd_history)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Exit codes: 0 ok (PASS/WARN), 1 critical regression (FAIL), 2 setup or infra error."""
+    args = build_parser().parse_args(argv)
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.WARNING,
+        format="%(levelname)s %(name)s: %(message)s",
+    )
+    try:
+        return args.func(args)
+    except (FatalProviderError, LookupError, OSError, RuntimeError, ValueError) as exc:
+        # Kept distinct from exit 1 so CI can tell "the prompt regressed" from
+        # "the eval could not run" (bad key, missing baseline, broken config).
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

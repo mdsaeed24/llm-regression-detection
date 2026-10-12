@@ -1,0 +1,25 @@
+# Prompt v2 - DELIBERATELY WEAKER, used to demonstrate regression detection.
+#
+# Simulates a plausible "simplification" PR that a reviewer might wave through:
+#   - category definitions and tie-break rules removed (just the labels remain)
+#   - few-shot examples removed "to save tokens"
+#   - loose summary instructions (no length, no specifics, no PII rule)
+#   - "when unsure, use general" fallback -> ambiguous emails collapse to general
+#   - temperature raised to 1.0 -> less consistent outputs across runs
+# It still produces valid JSON, so the regression shows up in quality metrics,
+# not as parse errors - which is exactly what the system must catch.
+
+version: v2
+created_at: 2026-10-10
+description: Simplified prompt (no definitions, no examples, general fallback, temp 1.0).
+model: deepseek-flash
+temperature: 1.0
+
+system_prompt: |
+  Classify the customer email into one of: billing, technical, account, general.
+  If you are not sure, use general. Also summarize the email.
+
+  Return json like:
+  {"category": "general", "summary": "..."}
+
+few_shot_examples: []

@@ -8,13 +8,21 @@ CI/CD for LLM prompts. Every pull request that changes a prompt runs the LLM fea
 | `v2` | "simplified": no definitions or examples, temperature 1.0 | **WARN**: accuracy −4.5 pp (billing −9 pp, general −12 pp) |
 | `v3` | `billing` and `account` definitions swapped by a copy-paste bug | **FAIL**: billing 100% → 64% (−36 pp); the merge is blocked |
 
-<!-- Screenshot placeholders: replace each with an image in docs/ -->
-| | |
-|---|---|
-| ![Streamlit dashboard](docs/screenshot-dashboard.png) | ![HTML diff report](docs/screenshot-report.png) |
-| *Streamlit dashboard: history, trends, run-vs-run diff* | *HTML report: regressed cases, old vs new output side by side* |
-| ![Slack alert](docs/screenshot-slack.png) | ![Failing PR check](docs/screenshot-pr-check.png) |
-| *Slack alert (Block Kit)* | *PR blocked by the `eval` check ([PR #1](https://github.com/mdsaeed24/llm-regression-detection/pull/1))* |
+**A PR that breaks the prompt is blocked**, with the scorecard posted as a comment ([PR #1](https://github.com/mdsaeed24/llm-regression-detection/pull/1)):
+
+![Failing PR check with the scorecard comment](docs/screenshot-pr-check.png)
+
+**The HTML report** (a CI artifact) shows each regressed case with the old and new output side by side:
+
+![HTML diff report](docs/screenshot-report.png)
+
+**Slack alert** (Block Kit), sent from CI or locally:
+
+![Slack alert](docs/screenshot-slack.png)
+
+**Streamlit dashboard**: run history, metric trends with the drift floor, per-category accuracy, and a compare-any-two-runs view:
+
+![Streamlit dashboard](docs/screenshot-dashboard.png)
 
 ## How it works
 

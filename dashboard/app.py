@@ -5,6 +5,7 @@ Run:  streamlit run dashboard/app.py
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -33,6 +34,12 @@ METRICS = {
 }
 
 st.set_page_config(page_title="Prompt regression dashboard", layout="wide")
+if os.environ.get("REGRESS_DEMO"):  # set by streamlit_app.py (public Streamlit Cloud demo)
+    st.info(
+        "**Public demo:** a read-only snapshot of real evaluation runs of this prompt-regression system. "
+        "No evaluation is run and no LLM is called on this page. "
+        "[Code, tests and write-up on GitHub](https://github.com/mdsaeed24/llm-regression-detection)"
+    )
 settings = load_settings(ROOT / "config.yaml")
 store = RunStore(ROOT / settings.storage.db_path)
 records = store.list_runs(500)

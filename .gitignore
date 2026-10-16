@@ -29,3 +29,6 @@ data/candidates.csv
 
 # Docker output volume (make docker-run)
 out/
+
+# Public demo snapshot (read-only copy of real eval runs) for Streamlit Cloud
+!demo/runs_demo.sqlite

@@ -8,6 +8,10 @@ CI/CD for LLM prompts. Every pull request that changes a prompt runs the LLM fea
 | `v2` | "simplified": no definitions or examples, temperature 1.0 | **WARN**: accuracy −4.5 pp (billing −9 pp, general −12 pp) |
 | `v3` | `billing` and `account` definitions swapped by a copy-paste bug | **FAIL**: billing 100% → 64% (−36 pp); the merge is blocked |
 
+**Live demo:** the run-history dashboard is deployable as a read-only Streamlit app over a snapshot of
+these real runs (`streamlit_app.py`; no API key needed, nothing is evaluated). Run it locally with
+`streamlit run streamlit_app.py`.
+
 **A PR that breaks the prompt is blocked**, with the scorecard posted as a comment ([PR #1](https://github.com/mdsaeed24/llm-regression-detection/pull/1)):
 
 ![Failing PR check with the scorecard comment](docs/screenshot-pr-check.png)

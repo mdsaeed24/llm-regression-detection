@@ -1,0 +1,14 @@
+# Streamlit Community Cloud: dependencies for the public demo (streamlit_app.py).
+# The full project installs from pyproject.toml (pip install -e ".[dev,dashboard]").
+streamlit==1.65.0
+pandas==3.0.6
+altair==6.3.0
+numpy==2.5.3
+openai==3.28.0
+pydantic==2.14.0
+pyyaml==6.0.3
+python-dotenv==1.2.4
+tenacity==9.2.1
+deepeval==4.2.8
+jinja2==3.1.6
+certifi==2026.7.22
